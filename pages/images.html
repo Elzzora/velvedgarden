@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gallery - Images & Videos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" href="/images/VGdiscord.png" type="image/x-icon">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        .gallery-item img, 
+        .gallery-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-item:hover img,
+        .gallery-item:hover video {
+            transform: scale(1.05);
+            transition: transform 0.5s;
+        }
+
+        .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover .caption {
+            opacity: 1;
+        }
+
+        .back-home {
+            display: block;
+            width: 200px;
+            margin: 0 auto;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            color: white;
+            background-color: #007bff;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .back-home:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Logo dan Navigasi -->
+        <header>
+        <nav>
+            <div class="logo">
+                <img src="/images/VGblank.png" alt="Logo" class="logo-img"> 
+              <span>Evelved Garden</span>
+            </div>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="/#staff">Staff</a></li>
+                <li><a href="/#statistics">Stats</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Konten Galeri -->
+    <div class="container">
+        <h1>Image & Video Gallery</h1>
+
+        <!-- Grid Gallery -->
+        <div class="gallery">
+            <!-- Image Item -->
+            <div class="gallery-item">
+                <img src="/images/VGblank.png" alt="Logo VG">
+                <div class="caption">Logo VG</div> <!-- Caption -->
+            </div>
+
+<!-- Image Item -->
+            <div class="gallery-item">
+                <img src="/images/VGdiscord.png" alt="Discord VG">
+                <div class="caption">Discord VG</div>
+            </div>
+
+
+<!-- Image Item -->
+            <div class="gallery-item">
+                <img src="/images/bannerVG.webp" alt="Banner VG">
+                <div class="caption">Banner VG</div>
+            </div>
+
+
+            <!-- Image Item -->
+            <div class="gallery-item">
+                <img src="/images/welcomeVG.webp" alt="Welcome VG">
+                <div class="caption">Welcome VG</div>
+            </div>
+
+           
+            <!-- Add more items here -->
+        </div>
+
+        <!-- Back to Home Button -->
+        <a href="/" class="back-home">Go Back Home</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-row">
+                <div class="footer-col">
+                    <h3>Velved Garden</h3>
+                    <p>Join our Discord for a vibrant community experience and stay connected!</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#about">About</a></li>
+                        <li><a href="/#staff">Staff</a></li>
+                        <li><a href="/#statistics">Stats</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="/twitter" target="_blank"><img src="/images/x.png" alt="Twitter"></a>
+                        <a href="/facebook" target="_blank"><img src="/images/fb.png" alt="Facebook"></a>
+                        <a href="/instagram" target="_blank"><img src="/images/ig.png" alt="Instagram"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TheVelvedGarden. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+<script src="/js/script.js></script>
+</body>
+</html>
