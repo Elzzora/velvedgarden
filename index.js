@@ -7,7 +7,7 @@ app.use(express.static(path.join(__dirname, 'scripts')));
 app.use(express.static(path.join(__dirname, 'pages')));
 
 app.get('/info', async (req, res) => {
-  const response1 = await fetch(`https://discord.com/api/v10/guilds/${process.env.GUILDID}?with_counts=true`, {
+  const response1 = await fetch(`https://discord.com/api/v10/guilds/1241780952846565386?with_counts=true`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ app.get('/info', async (req, res) => {
     }
   });
 
-  const response2 = await fetch(`https://discord.com/api/v10/guilds/${process.env.GUILDID}/channels`, {
+  const response2 = await fetch(`https://discord.com/api/v10/guilds/1241780952846565386/channels`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
