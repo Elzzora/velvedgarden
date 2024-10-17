@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velved Discord Server</title>
+        <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Velved Garden">
+    <meta name="twitter:description" content="We are an active community where you can find fun, learning, and a great time.
+From gaming to tech discussions, we offer a diverse range of channels that cater to all interests.">
+    <meta name="twitter:image" content="/images/bannerVG.webp">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Velved Garden Discord Server">
+    <meta property="og:description" content="We are an active community where you can find fun, learning, and a great time.
+From gaming to tech discussions, we offer a diverse range of channels that cater to all interests.">
+    <meta property="og:image" content="/images/bannerVG.webp">
+    <meta property="og:url" content="https://velvedgarden.vercel.app/">
+    <meta property="og:type" content="website">
+    <meta property="theme-color" content="#ffffff">
+    <meta property="og:site_name" content="Velved Garden">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" href="/images/VGdiscord.png" type="image/x-icon">
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="/images/VGblank.png" alt="Logo" class="logo-img"> 
+              <span>Evelved Garden</span>
+            </div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#staff">Staff</a></li>
+                <li><a href="#statistics">Stats</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Section -->
+    <section id="home" class="section">
+        <div class="home-content">
+            <h1>Welcome to Our <span>Discord</span> Server</h1>
+            <p>Join a community of like-minded people and enjoy a vibrant environment.</p>
+            <a href="https://discord.gg/GkpeB2RFr3" class="join-btn">Join Us Now</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="about-content">
+            <h2>About Our Server</h2>
+            <p>We are an active community where you can find fun, learning, and a great time.</p>
+            <p>From gaming to tech discussions, we offer a diverse range of channels that cater to all interests.</p>
+        </div>
+    </section>
+
+    <!-- Staff Section -->
+    <section id="staff" class="section">
+        <div class="staff-content">
+            <h2>Meet Our Staff</h2>
+            <div class="staff-grid">
+                <div class="staff-member" onclick="openModal('staff1')">
+                    <img src="https://images-ext-1.discordapp.net/external/RIrZnqaPdHr0hx-Ek3MaRn6zfkRA2HIFVcBFBQOQxp8/%3Fsize%3D4096%26ignore%3Dtrue%29./https/cdn.discordapp.com/avatars/1251874060711759984/32d8d9b7a5da26a1eea31de3d5ef2ad4.png" alt="Elzzora">
+                    <h3>Elzzora</h3>
+                    <p>Role: Owner</p>
+                </div>
+                <div class="staff-member" onclick="openModal('staff2')">
+                    <img src="https://images-ext-1.discordapp.net/external/lJAo4dfauf79UJUADAFBme6i3wGCBWOKgsNwYzhswFU/%3Fsize%3D4096%26ignore%3Dtrue%29./https/cdn.discordapp.com/avatars/1058131180593102939/68fafcd6e7f3ee0827bf51ffec74eaf6.png" alt="Luminare">
+                    <h3>Luminare</h3>
+                    <p>Role: Admin</p>
+                </div>
+
+                <div class="staff-member" onclick="openModal('staff3')">
+                    <img src="https://images-ext-1.discordapp.net/external/0Fin0e4nFg8QimOH-SVNHcc5ZVqs87NxEII-boTxdvQ/%3Fsize%3D4096%26ignore%3Dtrue%29./https/cdn.discordapp.com/avatars/1241225524949553223/2de5861d1879f8f30c28fd98064d1059.png" alt="AstroHunt">
+                    <h3>Astrohunt</h3>
+                    <p>Role: Admin</p>
+                </div>
+                <!-- Add more biar ga lupa -->
+            </div>
+        </div>
+    </section>
+
+
+<!-- Modal for 1 -->
+<div id="staff1-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('staff1')">&times;</span>
+        <h2>Elzzora</h2>
+        <p><strong>Rating:</strong> 4.9/5</p>
+    </div>
+</div>
+
+<!-- Modal for 2 -->
+<div id="staff2-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('staff2')">&times;</span>
+        <h2>Luminare</h2>
+        <p><strong>Joined:</strong> 17 June 2024</p>
+        <p><strong>Rating:</strong> 4.7/5</p>
+    </div>
+</div>
+
+
+<!-- Modal for 3 -->
+<div id="staff3-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('staff3')">&times;</span>
+        <h2>Astrohunt</h2>
+        <p><strong>Joined:</strong> 9 June 2024</p>
+        <p><strong>Rating:</strong> 4.5/5</p>
+    </div>
+</div>
+
+
+<!-- Statistik Server Section -->
+<section id="statistics" class="section">
+    <div class="statistics-content">
+        <h2>Server Statistics</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>Members</h3>
+                <p id="members-count">loading...</p> 
+            </div>
+            <div class="stat-item">
+                <h3>Channels</h3>
+                <p id="channels-count">loading...</p>
+            </div>
+            <div class="stat-item">
+                <h3>Active Daily</h3>
+                <p id="actives-count">loading...</p>
+            </div>
+            <div class="stat-item">
+                <h3>Events</h3>
+                <p id="events-count">loading...</p> 
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer Section -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-row">
+            <div class="footer-col">
+                <h3>Velved Garden</h3>
+                <p>Join our Discord for a vibrant community experience and stay connected!</p> 
+            </div>
+
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#staff">Staff</a></li>
+                    <li><a href="#statistics">Statistics</a></li>
+                     <li><a href="/images">Images</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="/twitter" target="_blank"><img src="/images/x.png" alt="Twitter"></a>
+                    <a href="/facebook" target="_blank"><img src="/images/fb.png" alt="Facebook"></a>
+                    <a href="/instagram" target="_blank"><img src="/images/ig.png" alt="Instagram"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 TheVelvedGarden. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+<script src="/js/script.js"></script>
+</body>
+</html>
