@@ -40,6 +40,10 @@ app.get('/images', (req, res) => {
   return res.sendFile(path.join(__dirname, 'pages/images.html'));
 });
 
+app.get('/partner-list', (req, res) => {
+  return res.sendFile(path.join(__dirname, 'pages/partner-list.html'));
+});
+
 app.use((req, res) => {
   return res.sendFile(path.join(__dirname, 'pages/404.html'));
 });
