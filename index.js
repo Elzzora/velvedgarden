@@ -3,10 +3,9 @@ const app = express();
 const path = require('path');
 require('dotenv').config();
 
-app.use(express.static(path.join(__dirname, 'scripts')));
-app.use(express.static(path.join(__dirname, 'pages')));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/info', async (req, res) => {
+app.get('/guilds', async (req, res) => {
   const response1 = await fetch(`https://discord.com/api/v10/guilds/1241780952846565386?with_counts=true`, {
     method: 'GET',
     headers: {
@@ -40,8 +39,8 @@ app.get('/images', (req, res) => {
   return res.sendFile(path.join(__dirname, 'pages/images.html'));
 });
 
-app.get('/partnerlist', (req, res) => {
-  return res.sendFile(path.join(__dirname, 'pages/partner-list.html'));
+app.get('/partners', (req, res) => {
+  return res.sendFile(path.join(__dirname, 'pages/partners.html'));
 });
 
 app.use((req, res) => {
