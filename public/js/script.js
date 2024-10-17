@@ -47,12 +47,12 @@ window.onclick = function(event) {
 
 async function getCount() {
     try {
-      const res = await fetch('/info');
+      const res = await fetch('/guilds');
       const data = await res.json();
       document.getElementById('members-count').textContent = data?.members ?? 'fetch failed';
       document.getElementById('channels-count').textContent = data?.channels ?? 'fetch failed';
       document.getElementById('actives-count').textContent = data?.actives ?? 'fetch failed';
-      document.getElementById('events-count').textContent = '0 weekly';
+      document.getElementById('events-count').textContent = '0';
     } catch (error) {
       console.error('Error fetching server statistics:', error);
     }

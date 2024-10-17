@@ -3,26 +3,11 @@ const app = express();
 const path = require('path');
 require('dotenv').config();
 
-app.use(express.static(path.join(__dirname, 'scripts')));
-app.use(express.static(path.join(__dirname, 'pages')));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/info', async (req, res) => {
-  const response1 = await fetch(`https://discord.com/api/v10/guilds/1241780952846565386?with_counts=true`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bot ${process.env.TOKEN}`
-    }
-  });
-
-  const response2 = await fetch(`https://discord.com/api/v10/guilds/1241780952846565386/channels`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bot ${process.env.TOKEN}`
-    }
-  });
-
+app.get('/guilds', async (req, res) => {
+  const response1 = await fetch(`https://discord.com/api/v10/guilds/1241780952846565386?with_counts=true`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bot ${process.env.TOKEN}` }});
+  const response2 = await fetch(`https://discord.com/api/v10/guilds/1241780952846565386/channels`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bot ${process.env.TOKEN}` }});
   const responseData = await response1.json();
   const channelData = await response2.json();
   return res.json({
@@ -32,20 +17,9 @@ app.get('/info', async (req, res) => {
   });
 });
 
-app.get('/', (req, res) => {
-  return res.sendFile(path.join(__dirname, 'pages/index.html'));
-});
-
-app.get('/images', (req, res) => {
-  return res.sendFile(path.join(__dirname, 'pages/images.html'));
-});
-
-app.get('/partnerlist', (req, res) => {
-  return res.sendFile(path.join(__dirname, 'pages/partner-list.html'));
-});
-
-app.use((req, res) => {
-  return res.sendFile(path.join(__dirname, 'pages/404.html'));
-});
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'pages/index.html')));
+app.get('/images', (req, res) => res.sendFile(path.join(__dirname, 'pages/images.html')));
+app.get('/partners', (req, res) => res.sendFile(path.join(__dirname, 'pages/partners.html')));
+app.use((req, res) => res.sendFile(path.join(__dirname, 'pages/404.html')));
 
 app.listen(process.env.PORT);
