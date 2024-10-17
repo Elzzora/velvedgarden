@@ -52,7 +52,7 @@ async function getCount() {
       document.getElementById('members-count').textContent = data?.members ?? 'fetch failed';
       document.getElementById('channels-count').textContent = data?.channels ?? 'fetch failed';
       document.getElementById('actives-count').textContent = data?.actives ?? 'fetch failed';
-      document.getElementById('events-count').textContent = '0 weekly';
+      document.getElementById('events-count').textContent = '0';
     } catch (error) {
       console.error('Error fetching server statistics:', error);
     }
