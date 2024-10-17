@@ -22,6 +22,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
     <style>
+search-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+}
+
+.search-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none; /* Menghapus outline default */
+    margin-right: 10px; /* Jarak antara ikon dan input */
+    transition: transform 0.2s; /* Transisi halus saat hover */
+}
+
+.search-icon:hover {
+    transform: scale(1.1); /* Efek zoom saat hover */
+}
+
+#searchInput {
+    padding: 10px 15px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px; /* Lebar input */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease; /* Transisi halus */
+    display: none; /* Sembunyikan input secara default */
+}
+
+#searchInput:focus {
+    outline: none; /* Menghapus outline default */
+    box-shadow: 0 0 10px rgba(78, 205, 196, 0.5); /* Bayangan saat fokus */
+    }
+
 /* Partners Section */
 .partners-section {
     text-align: center;
@@ -132,6 +168,20 @@
         </nav>
     </header>
 
+<section class="search-section">
+    <button class="search-icon" onclick="toggleSearchBar()">
+        <img src="images/search.png" alt="Search" width="20px">
+    </button>
+
+    <!-- Search Bar -->
+    <input type="text" id="searchInput" placeholder="Search servers by name..." onkeyup="filterNovels()" style="display: none;">
+</section>
+
+<!-- Pesan Tidak Dapat Ditemukan -->
+<div id="notFoundMessage" style="display: none; color: red; text-align: center; margin: 20px;">
+    Server not Found! 
+</div>
+
     <!-- Main Section -->
     <main>
         <section id="partners" class="partners-section">
@@ -188,4 +238,45 @@
     </div>
 </footer>
 <script src="/js/script.js"></script>
+<script>
+function toggleSearchBar() {
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput.style.display === "none" || searchInput.style.display === "") {
+    searchInput.style.display = "block"; // Tampilkan search bar
+    searchInput.classList.add("show");   // Tambahkan kelas untuk animasi
+  } else {
+    searchInput.style.display = "none";  // Sembunyikan search bar
+    searchInput.classList.remove("show");
+    // Sembunyikan pesan tidak ditemukan saat search bar ditutup
+    document.getElementById('notFoundMessage').style.display = "none"; 
+  }
+}
+
+// Fungsi untuk menyaring daftar novel berdasarkan judul
+function filterNovels() {
+  let input = document.getElementById('searchInput').value.toLowerCase();
+  let novels = document.getElementsByClassName('novel-item');
+  let found = false; // Variabel untuk melacak apakah novel ditemukan
+
+  // Looping melalui semua novel
+  for (let i = 0; i < novels.length; i++) {
+    let title = novels[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+
+    // Periksa apakah judul novel cocok dengan input pencarian
+    if (title.includes(input)) {
+      novels[i].style.display = ""; // Tampilkan jika cocok
+      found = true; // Tandai bahwa setidaknya satu novel ditemukan
+    } else {
+      novels[i].style.display = "none"; // Sembunyikan jika tidak cocok
+    }
+  }
+
+  // Tampilkan pesan jika tidak ada novel yang ditemukan
+  const notFoundMessage = document.getElementById('notFoundMessage');
+  if (!found && input) {
+    notFoundMessage.style.display = "block"; // Tampilkan pesan tidak ditemukan
+  } else {
+    notFoundMessage.style.display = "none"; // Sembunyikan pesan jika ada novel yang ditemukan
+  }
+</script>
 </body>
