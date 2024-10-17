@@ -40,7 +40,7 @@ app.get('/images', (req, res) => {
   return res.sendFile(path.join(__dirname, 'pages/images.html'));
 });
 
-app.get('/partner-list', (req, res) => {
+app.get('/partnerlist', (req, res) => {
   return res.sendFile(path.join(__dirname, 'pages/partner-list.html'));
 });
 
