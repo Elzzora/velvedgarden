@@ -283,28 +283,26 @@
 
 function showAlert(message) {
   document.getElementById('alertMessage').innerText = message;
-  document.getElementById('customAlert').style.display = 'flex';
+  document.getElementById('customAlert').style.display = 'flex'; 
 }
 
 function closeAlert() {
   document.getElementById('customAlert').style.display = 'none';
-window.location.href = '/logout';
+  window.location.href = '/logout';
 }
 
-      try {
-        if (response.ok) {
-          showAlert('Thank you for submitting your application! Make sure you are already joined to our discord server!');
-        } else {
-          showAlert('Failed to submit form! Try again later.');
-        }
-      } catch (error) {
-        showAlert('Failed to submit form! Try again later.');
-      } finally {
-        submitButton.classList.remove('loading');
-        submitButton.disabled = false;
-      }
-    });
-
+try {
+  if (response.ok) {
+    showAlert('Thank you for submitting your application! Make sure you are already joined to our discord server!');
+  } else {
+    showAlert('Failed to submit form! Try again later.');
+  }
+} catch (error) {
+  showAlert('Failed to submit form! Try again later.');
+} finally {
+  submitButton.classList.remove('loading');
+  submitButton.disabled = false;
+}
 
     async function getProfile() {
       const res = await fetch('/profile');
