@@ -299,9 +299,7 @@ window.location.href = '/logout';
         }
       } catch (error) {
         showAlert('Failed to submit form! Try again later.');
-      }
-     }
-       finally {
+      } finally {
         submitButton.classList.remove('loading');
         submitButton.disabled = false;
       }
