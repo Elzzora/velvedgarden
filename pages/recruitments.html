@@ -213,7 +213,48 @@
 
     .custom-alert button:hover {
       background-color: #0056b3;
+     }
+
+   #position {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><polygon fill="%23333" points="0,0 140,0 70,80"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 12px;
+  }
+
+  
+  #position:hover {
+    border-color: #999;
+  }
+
+  
+  label[for="position"] {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  
+  select option {
+    padding: 10px;
+  }
+
+
+  @media (max-width: 768px) {
+    #position {
+      width: 100%;
     }
+  }
   </style>
 </head>
 <body>
