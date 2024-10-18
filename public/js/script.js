@@ -1,10 +1,3 @@
-$(document).ready(function() {
-    $('#position').select2({
-      placeholder: "Select a position",
-      allowClear: true
-    });
-  });
-
 // Smooth scroll for navigation
 document.querySelectorAll('nav ul li a').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
