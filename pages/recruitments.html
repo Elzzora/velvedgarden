@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Staff Recruitment</title>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <style>
     /* Styling utama */
     html {
@@ -296,6 +298,13 @@
 
   <script src="/js/script.js"></script>
   <script>
+  $(document).ready(function() {
+    $('#position').select2({
+      placeholder: "Select a position",
+      allowClear: true
+    });
+  });
+
     const form = document.getElementById('recruitment-form');
 
     form.addEventListener('submit', async (event) => {
