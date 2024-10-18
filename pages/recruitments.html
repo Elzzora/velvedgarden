@@ -278,6 +278,7 @@ function showAlert(message) {
 
 function closeAlert() {
   document.getElementById('customAlert').style.display = 'none';
+window.location.href = '/logout';
 }
 
       try {
@@ -293,7 +294,6 @@ function closeAlert() {
        finally {
         submitButton.classList.remove('loading');
         submitButton.disabled = false;
-        window.location.href = '/logout';
       }
     });
 
