@@ -5,21 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Gallery - Images & Videos</title>
+    <title>Media Gallery</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="icon" href="/images/VGdiscord.png" type="image/x-icon">
     <style>
         .container {
+            align: center;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            padding-top: 100px;
         }
 
         h1 {
             text-align: center;
             font-size: 36px;
             color: #333;
+            margin-top: 50px;
             margin-bottom: 40px;
         }
 
@@ -70,22 +73,24 @@
             opacity: 1;
         }
 
-        .back-home {
-            display: block;
-            width: 200px;
-            margin: 0 auto;
-            padding: 15px;
-            text-align: center;
-            font-size: 18px;
-            color: white;
-            background-color: #007bff;
-            border-radius: 30px;
+        #homes {
+            display: inline-block;
+            padding: 12px 25px;
+            margin-top: 50px;
+            font-size: 15px;
+            color: #007bff;
+            background-color: #fff;
+            border: 2px solid #007bff;
             text-decoration: none;
+            border-radius: 100px;
+            align-self: center;
             transition: background-color 0.3s;
         }
 
-        .back-home:hover {
-            background-color: #0056b3;
+        #homes:hover {
+            color: white;
+            background-color: black;
+            border: 2px solid black;
         }
 
     </style>
@@ -93,23 +98,17 @@
 <body>
 
     <!-- Logo dan Navigasi -->
-        <header>
+    <header>
         <nav>
             <div class="logo">
                 <img src="/images/VGblank.png" alt="Logo" class="logo-img"> 
               <span>Evelved Garden</span>
             </div>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/#about">About</a></li>
-                <li><a href="/#staff">Staff</a></li>
-                <li><a href="/#statistics">Stats</a></li>
-            </ul>
         </nav>
     </header>
     <!-- Konten Galeri -->
     <div class="container">
-        <h1>Image & Video Gallery</h1>
+        <h1>Media Gallery</h1>
 
         <!-- Grid Gallery -->
         <div class="gallery">
@@ -149,12 +148,10 @@
            
             <!-- Add more items here -->
         </div>
+                <a id="homes" href="/"><strong>Back to Home</strong></a>
 
         <!-- Back to Home Button -->
-        <a href="/" class="back-home">Go Back Home</a>
     </div>
-
-    <!-- Footer -->
     <footer>
         <div class="footer-container">
             <div class="footer-row">
@@ -169,6 +166,8 @@
                         <li><a href="/#about">About</a></li>
                         <li><a href="/#staff">Staff</a></li>
                         <li><a href="/#statistics">Stats</a></li>
+                        <li><a href="/partners"">Partners</a></li>
+                        <li><a href="/recruitments">Recruitments</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">

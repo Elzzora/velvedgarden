@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login with Discord</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Pastikan styles.css sesuai -->
+    <style>
+        /* Styling khusus untuk 404 page */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h1 {
+            font-size: 30px;
+            color: #333;
+            margin: 10px 0 20px;
+        }
+
+        .container h2 {
+            font-size: 28px;
+            color: #333;
+            margin: 10px 0 20px;
+        }
+
+        .container #logins {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 18px;
+            color: white;
+            background-color: #007bff;
+            border: 2px solid #007bff;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: background-color 0.3s;
+        }
+
+        .container #homes {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 5px;
+            font-size: 15px;
+            color: #007bff;
+            background-color: #fff;
+            border: 2px solid #007bff;
+            text-decoration: none;
+            border-radius: 100px;
+            transition: background-color 0.3s;
+        }
+
+        .container #logins:hover, #homes:hover {
+            color: white;
+            background-color: black;
+            border: 2px solid black;
+        }
+
+        .logo-img {
+            width: 150px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="/images/VGblank.png" alt="Logo" class="logo-img"> <!-- Ganti dengan logo server -->
+        <h1>Recruitments</h1>
+        <a id="logins" href="/auth/discord"><strong>LOGIN WITH DISCORD</strong></a>
+        <a id="homes" href="/"><strong>Back to Home</strong></a>
+    </div>
+
+</body>
+</html>
