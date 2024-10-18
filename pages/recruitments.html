@@ -1,215 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Recruitment</title>
-    <style>
-    <link rel="stylesheet" href="/css/styles.css">
-        /* Styling utama */
-        .container {
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            width: 100%;
-            margin: 50px auto;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeIn 0.5s forwards;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Recruitment</title>
+  <style>
+    /* Styling utama */
+    html {
+      font-family: 'Arial', sans-serif;
+    }
 
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .container {
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      margin: 50px auto;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeIn 0.5s forwards;
+    }
 
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 24px;
-            opacity: 0;
-            animation: fadeInText 0.8s 0.2s forwards;
-        }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-        @keyframes fadeInText {
-            to {
-                opacity: 1;
-            }
-        }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 24px;
+      opacity: 0;
+      animation: fadeInText 0.8s 0.2s forwards;
+    }
 
-        .form-group {
-            margin-bottom: 20px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInForm 0.5s forwards;
-        }
+    .profile {
+      align: center;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      margin: 20px 0;
+      border-radius: 15px;
+    }
 
-        .form-group:nth-child(1) {
-            animation-delay: 0.3s;
-        }
+    #profile-image, #profile-name {
+      align-self: center;
+      border-radius: 100px;
+      font-size: 18px;
+    }
 
-        .form-group:nth-child(2) {
-            animation-delay: 0.5s;
-        }
+    @keyframes fadeInText {
+      to {
+        opacity: 1;
+      }
+    }
 
-        .form-group:nth-child(3) {
-            animation-delay: 0.7s;
-        }
+    .form-group {
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInForm 0.5s forwards;
+    }
 
-        @keyframes fadeInForm {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .form-group:nth-child(1) { animation-delay: 0.3s; }
+    .form-group:nth-child(2) { animation-delay: 0.5s; }
+    .form-group:nth-child(3) { animation-delay: 0.7s; }
 
-        label {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 8px;
-            display: block;
-            transition: color 0.3s ease;
-        }
+    @keyframes fadeInForm {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            margin-top: 6px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            background-color: #f9f9f9;
-        }
+    label {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 8px;
+      display: block;
+      transition: color 0.3s ease;
+    }
 
-        input:focus, textarea:focus {
-            border-color: #007bff;
-            outline: none;
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
-            background-color: #fff;
-        }
+    input, textarea, select {
+      font-family: 'Arial', sans-serif;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-top: 6px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      background-color: #f9f9f9;
+    }
 
-        input::placeholder, textarea::placeholder {
-            color: #bbb;
-            transition: color 0.3s;
-        }
+    input:focus, textarea:focus, select:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+      background-color: #fff;
+    }
 
-        input:focus::placeholder, textarea:focus::placeholder {
-            color: #007bff;
-        }
+    input::placeholder, textarea::placeholder {
+      color: #bbb;
+      transition: color 0.3s;
+    }
 
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 12px;
-            font-size: 16px;
-            width: 100%;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
+    input:focus::placeholder, textarea:focus::placeholder {
+      color: #007bff;
+    }
 
-        button:hover {
-            background-color: #0056b3;
-            transform: translateY(-3px);
-        }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      width: 100%;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
 
-        button:active {
-            background-color: #004090;
-            transform: translateY(1px);
-        }
+    button:hover {
+      background-color: #0056b3;
+      transform: translateY(-3px);
+    }
 
-        /* Animasi untuk loading button (jika perlu) */
-        button.loading {
-            background-color: #007bff;
-            cursor: not-allowed;
-        }
+    button:active {
+      background-color: #004090;
+      transform: translateY(1px);
+    }
 
-        button.loading::after {
-            content: '';
-            border: 2px solid #fff;
-            border-top: 2px solid #007bff;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            display: inline-block;
-            animation: spin 0.8s linear infinite;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
+    button.loading {
+      background-color: #007bff;
+      cursor: not-allowed;
+    }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    button.loading::after {
+      content: '';
+      border: 2px solid #fff;
+      border-top: 2px solid #007bff;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      animation: spin 0.8s linear infinite;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #homes {
+      display: inline-block;
+      padding: 12px 25px;
+      margin-top: 20px;
+      font-size: 15px;
+      color: white;
+      background-color: red;
+      border: 2px solid red;
+      text-decoration: none;
+      border-radius: 100px;
+      transition: background-color 0.3s;
+    }
+
+    #homes:hover {
+      background-color: darkred;
+      border: 2px solid darkred;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Staff Recruitment Form</h1>
-        <form id="recruitment-form">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Enter your name" required>
-            </div>
-            <div class="form-group">
-                <label for="position">Position:</label>
-                <input type="text" id="position" name="position" placeholder="Position you are applying for" required>
-            </div>
-            <div class="form-group">
-                <label for="experience">Experience:</label>
-                <textarea id="experience" name="experience" rows="4" placeholder="Describe your experience" required></textarea>
-            </div>
-            <button type="submit">Submit</button>
-        </form>
+  <div class="container">
+    <h1>Staff Recruitment Form</h1>
+    <div class="profile">
+      <img id="profile-image" width="100" src="https://cdn.discordapp.com/embed/avatars/0.png">
+      <p id="profile-name">Loading...</p>
     </div>
-<script src="/js/script.js"></script>
-    <!-- Include external JavaScript file -->
-    <script>
-const form = document.getElementById('recruitment-form');
-form.addEventListener('submit', async (event) => {
-    event.preventDefault();
+    <form id="recruitment-form">
+      <div class="form-group">
+        <label for="position"><strong>POSITION</strong></label>
+        <select id="position" name="position" required>
+          <option value="" disabled selected>Select a position</option>
+          <option value="moderator">Moderator</option>
+          <option value="designer">Designer</option>
+          <option value="partner manager">Partner Manager</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="reason"><strong>REASON</strong></label>
+        <textarea id="reason" name="reason" rows="4" placeholder="Why do you want to join as staff?" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="experience"><strong>EXPERIENCE</strong></label>
+        <textarea id="experience" name="experience" rows="4" placeholder="Describe your experience" required></textarea>
+      </div>
+      <button type="submit"><strong>SUBMIT FORM</strong></button>
+    </form>
+    <a id="homes" href="/logout"><strong>LOGOUT</strong></a>
+  </div>
+  <script src="/js/script.js"></script>
+  <script>
+    const form = document.getElementById('recruitment-form');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
 
-    // Disable the button and show loading spinner
-    const submitButton = form.querySelector('button');
-    submitButton.classList.add('loading');
-    submitButton.disabled = true;
+      // Disable the button and show loading spinner
+      const submitButton = form.querySelector('button');
+      submitButton.classList.add('loading');
+      submitButton.disabled = true;
 
-    const formData = new FormData(form);
-    const data = {
-        name: formData.get('name'),
+      const formData = new FormData(form);
+      const data = {
         position: formData.get('position'),
+        reason: formData.get('reason'),
         experience: formData.get('experience')
-    };
+      };
 
-    try {
-        const response = await fetch('/api/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+      try {
+        const response = await fetch('/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
         });
 
         if (response.ok) {
-            alert('Form submitted successfully!');
+          alert('Thank you for submitting your application! Make sure you are already joined to our discord server!');
         } else {
-            alert('Failed to submit the form.');
+          alert('Failed to submit form! Try again later.');
         }
-    } catch (error) {
-        console.error('Error:', error);
-    } finally {
-        // Enable the button and remove loading spinner
+      } catch (error) {
+        alert('Failed to submit form! Try again later.');
+      } finally {
         submitButton.classList.remove('loading');
         submitButton.disabled = false;
+        window.location.href = '/logout';
+      }
+    });
+
+    async function getProfile() {
+      const res = await fetch('/profile');
+      const data = await res.json();
+      document.getElementById('profile-name').textContent = data.name ? `@${data.name}` : 'N/A';
+      document.getElementById('profile-image').src = data.avatar ?? `https://cdn.discordapp.com/embed/avatars/0.png`;
     }
-});
-</script>
+
+    getProfile();
+  </script>
 </body>
 </html>

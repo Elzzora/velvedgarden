@@ -67,6 +67,7 @@
 
 /* Partner Image */
 .partner-card img {
+    background-color: #7d7d7d;
     max-width: 120px;
     border-radius: 50%;
     margin-bottom: 15px;
@@ -87,6 +88,9 @@
     margin-bottom: 15px;
 }
 
+main {
+    padding-top: 100px;
+}
 /* Partner Button */
 .partner-button {
     display: inline-block;
@@ -114,22 +118,36 @@
     .partner-card {
         width: 90%;
     }
-}</style>
+}
+    
+#homes {
+    display: inline-block;
+    padding: 12px 25px;
+    margin-top: 50px;
+    font-size: 15px;
+    color: #007bff;
+    background-color: #fff;
+    border: 2px solid #007bff;
+    text-decoration: none;
+    border-radius: 100px;
+    transition: background-color 0.3s;
+}
+
+#homes:hover {
+    color: white;
+    background-color: black;
+    border: 2px solid black;
+}
+</style>
 </head>
 <body>
     <!-- Header -->
        <header>
         <nav>
             <div class="logo">
-                <img src="https://velvedgarden.vercel.app/images/VGblank.png" alt="Logo" class="logo-img"> 
-              <span>Evelved Partner</span>
+                <img src="/images/VGblank.png" alt="Logo" class="logo-img"> 
+              <span>Evelved Garden</span>
             </div>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/#about">About</a></li>
-                <li><a href="/#staff">Staff</a></li>
-                <li><a href="/#statistics">Stats</a></li>
-            </ul>
         </nav>
     </header>
 
@@ -176,6 +194,7 @@
 
                 <!-- Add more partners as needed -->
             </div>
+            <a id="homes" href="/"><strong>Back to Home</strong></a>
         </section>
     </main>
 
@@ -190,11 +209,12 @@
             <div class="footer-col">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="#home">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="/#about">About</a></li>
                     <li><a href="/#staff">Staff</a></li>
                     <li><a href="/#statistics">Statistics</a></li>
-                     <li><a href="/images">/Images</a></li>
+                    <li><a href="/images">Images</a></li>
+                    <li><a href="/recruitments">Recruitments</a></li>
                 </ul>
             </div>
 
