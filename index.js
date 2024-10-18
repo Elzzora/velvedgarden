@@ -66,10 +66,9 @@ app.post('/submit', fetchUserData, async (req, res) => {
         const embed = new EmbedBuilder()
             .setTitle('New Form Submission')
             .addFields(
-                { name: 'Username', value: `[${user.user_username}](https://discord.com/users/${user.user_id})` },
-                { name: 'Discord ID', value: user.user_id },
-                { name: 'Email', value: user.user_email },
-                { name: 'Position', value: data?.position?.toUpperCase() || 'N/A' },
+                { name: 'Username', value: `**[${user.user_username || 'N/A'}](https://discord.com/users/${user.user_id})**` },
+                { name: 'Discord ID', value: `**${user.user_id || 'N/A'}**` },
+                { name: 'Position', value: `**${data?.position?.toUpperCase() || 'N/A'}**` },
                 { name: 'Reason', value: data?.reason || 'N/A' },
                 { name: 'Experience', value: data?.experience || 'N/A' }
             )
