@@ -288,13 +288,15 @@ function closeAlert() {
         }
       } catch (error) {
         showAlert('Failed to submit form! Try again later.');
-      } finally {
+      }
+     }
+       finally {
         submitButton.classList.remove('loading');
         submitButton.disabled = false;
         window.location.href = '/logout';
       }
     });
-}
+
 
     async function getProfile() {
       const res = await fetch('/profile');
