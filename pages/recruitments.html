@@ -176,6 +176,38 @@
       background-color: darkred;
       border: 2px solid darkred;
     }
+
+   .custom-alert {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      border: 2px solid #444;
+      padding: 20px;
+      z-index: 1000;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      border-radius: 10px;
+}
+
+    .custom-alert p {
+      margin-bottom: 20px;
+}
+
+    .custom-alert button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+}
+
+    .custom-alert button:hover {
+      background-color: #0056b3;
+}
   </style>
 </head>
 <body>
@@ -207,6 +239,12 @@
     </form>
     <a id="homes" href="/logout"><strong>LOGOUT</strong></a>
   </div>
+
+  <div id="customAlert" class="custom-alert">
+  <p id="alertMessage"></p>
+  <button onclick="closeAlert()">OK</button>
+</div>
+
   <script src="/js/script.js"></script>
   <script>
     const form = document.getElementById('recruitment-form');
@@ -232,19 +270,31 @@
           body: JSON.stringify(data)
         });
 
+
+function showAlert(message) {
+  document.getElementById('alertMessage').innerText = message;
+  document.getElementById('customAlert').style.display = 'block';
+}
+
+function closeAlert() {
+  document.getElementById('customAlert').style.display = 'none';
+}
+
+      try {
         if (response.ok) {
-          alert('Thank you for submitting your application! Make sure you are already joined to our discord server!');
+          showAlert('Thank you for submitting your application! Make sure you are already joined to our discord server!');
         } else {
-          alert('Failed to submit form! Try again later.');
+          showAlert('Failed to submit form! Try again later.');
         }
       } catch (error) {
-        alert('Failed to submit form! Try again later.');
+        showAlert('Failed to submit form! Try again later.');
       } finally {
         submitButton.classList.remove('loading');
         submitButton.disabled = false;
         window.location.href = '/logout';
       }
     });
+}
 
     async function getProfile() {
       const res = await fetch('/profile');
