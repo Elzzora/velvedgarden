@@ -2,9 +2,11 @@
   "dependencies": {
     "discord.js": "^14.16.3",
     "axios": "^1.7.7",
-    "dotenv": "latest",
-    "express": "latest",
-    "mysql2": "latest",
-    "cookie-parser": "latest"
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "mysql2": "^3.11.3",
+    "cookie-parser": "^1.4.7"
+    "cors": "^2.8.5",
+    "helmet": "^8.0.0"
   }
 }

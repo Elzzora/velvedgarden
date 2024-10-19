@@ -2,14 +2,18 @@ const express = require('express');
 const path = require('path');
 const axios = require('axios');
 const cookieParser = require('cookie-parser');
-const { WebhookClient, EmbedBuilder } = require('discord.js');
+const { ButtonBuilder, ButtonStyle, ActionRowBuilder, WebhookClient, EmbedBuilder } = require('discord.js');
 const bodyParser = require('body-parser');
 const { createPool } = require('mysql2/promise');
+const cors = require('cors');
+const helmet = require('helmet');
 require('dotenv').config();
 
 const app = express();
 const db = createPool(process.env.DATABASE);
 
+app.use(cors());
+app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -30,7 +34,18 @@ const fetchUserData = async (req, res, next) => {
         req.user = userData.length > 0 ? userData[0] : null;
     } catch (err) {
         console.error(err);
+        return next(err);
     }
+    next();
+};
+
+const isAuthenticated = (req, res, next) => {
+    if (!req.user) return res.redirect('/login');
+    next();
+};
+
+const isAuthenticatedJson = (req, res, next) => {
+    if (!req.user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
     next();
 };
 
@@ -55,19 +70,26 @@ app.get('/api/guilds', async (_, res) => {
     }
 });
 
-app.post('/submit/:type', fetchUserData, async (req, res) => {
-    const user = req.user;
-    if (!user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
+app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) => {
     const data = req.body;
-    const webhook = new WebhookClient({ url: process.env.WEBHOOK });
+    const type = req.params?.type;
+    const user = req.user;
+
+    const webhook = new WebhookClient({ url: type === 'recruitments' ? process.env.WEBHOOK : process.env.WEBHOOK_FEEDBACK });
+    const button = new ButtonBuilder()
+        .setURL(`https://velvedgarden.vercel.app/${type}`)
+        .setLabel(type === 'recruitments' ? 'Register Now!' : 'Submit Your Rating!')
+        .setStyle(ButtonStyle.Link);
+    const row = new ActionRowBuilder().addComponents(button);
+
     try {
-        if (req.params?.type === 'recruitments') {
+        if (type === 'recruitments') {
             const embed = new EmbedBuilder()
                 .setTitle('New Form Submission')
                 .addFields(
-                    { name: 'Username', value: `**[${user.user_username || 'N/A'}](https://discord.com/users/${user.user_id})**` },
-                    { name: 'Discord ID', value: `**${user.user_id || 'N/A'}**` },
-                    { name: 'Position', value: `**${data.position?.toUpperCase() || 'N/A'}**` },
+                    { name: 'Username', value: `[@${user.user_username || 'N/A'}](https://discord.com/users/${user.user_id})` },
+                    { name: 'Discord ID', value: user.user_id || 'N/A' },
+                    { name: 'Position', value: data.position?.toUpperCase() || 'N/A' },
                     { name: 'Reason', value: data.reason || 'N/A' },
                     { name: 'Experience', value: data.experience || 'N/A' }
                 )
@@ -76,21 +98,27 @@ app.post('/submit/:type', fetchUserData, async (req, res) => {
                     : `https://cdn.discordapp.com/embed/avatars/0.png`)
                 .setTimestamp()
                 .setColor('Green');
-            await webhook.send({ embeds: [embed] });
-        } else if (req.params?.type === 'feedback') {
+            await webhook.send({ embeds: [embed], components: [row] });
+        } else if (type === 'feedback') {
             const embed = new EmbedBuilder()
-                .setTitle('New Rating Submission')
+                .setTitle(`@${user.user_username}`)
+                .setAuthor({
+                    name: 'New Rating Submitted By:',
+                    iconURL: user.user_avatar
+                        ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
+                        : `https://cdn.discordapp.com/embed/avatars/0.png`
+                })
                 .addFields(
-                    { name: 'Rating', value: data.rating ?? 'N/A' },
-                    { name: 'Reason', value: data.reason ?? 'N/A' },
-                    { name: 'Suggestion', value: data.suggestion ?? 'N/A' }
+                    { name: 'Rating', value: data?.rating || 'N/A' },
+                    { name: 'Reason', value: data?.reason || 'N/A' },
+                    { name: 'Suggestion', value: data?.suggestion || 'N/A' }
                 )
                 .setThumbnail(user.user_avatar
                     ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
                     : `https://cdn.discordapp.com/embed/avatars/0.png`)
                 .setTimestamp()
                 .setColor('Yellow');
-            await webhook.send({ embeds: [embed] });
+            await webhook.send({ embeds: [embed], components: [row] });
         }
         res.status(200).json({ message: 'OK', code: 200 });
     } catch (err) {
@@ -98,29 +126,20 @@ app.post('/submit/:type', fetchUserData, async (req, res) => {
     }
 });
 
-app.all('/recruitments', fetchUserData, (req, res) => {
-    if (!req.user) return res.redirect('/login');
-    res.sendFile(path.join(__dirname, 'pages', 'recruitments.html'));
-});
+app.all('/recruitments', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'recruitments.html')));
+app.all('/feedback', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'feedback.html')));
+app.all('/forms', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'forms.html')));
 
-app.all('/feedback', fetchUserData, (req, res) => {
-    if (!req.user) return res.redirect('/login');
-    res.sendFile(path.join(__dirname, 'pages', 'feedback.html'));
-});
-
-app.all('/auth/discord', (req, res) => {
+app.all('/auth/discord', (_, res) => {
     res.clearCookie('user_id');
     res.redirect(process.env.AUTH_URL);
 });
 
-app.get('/api/profile', fetchUserData, async (req, res) => {
-    const user = req.user;
-    if (!user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
-
+app.get('/api/profile', fetchUserData, isAuthenticatedJson, async (req, res) => {
     res.status(200).json({
-        name: user.user_username,
-        avatar: user.user_avatar
-            ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
+        name: req.user?.user_username,
+        avatar: req.user?.user_avatar
+            ? `https://cdn.discordapp.com/avatars/${req.user.user_id}/${req.user.user_avatar}`
             : `https://cdn.discordapp.com/embed/avatars/0.png`
     });
 });
@@ -154,7 +173,7 @@ app.get('/auth/discord/callback', async (req, res) => {
         [id, avatar, email, username, avatar, email, username]);
 
         res.cookie('user_id', id, { maxAge: 3600000, httpOnly: true, secure: true });
-        return res.redirect('/recruitments');
+        return res.redirect('/forms');
     } catch (err) {
         console.error('Error fetching user data:', err.response?.data || err.message);
         handleError(res, err);
@@ -172,7 +191,7 @@ const pages = [
 ];
 
 pages.forEach(page => {
-    app.all(page, async (req, res) => {
+    app.all(page, async (_, res) => {
         if (page === '/logout') {
             res.clearCookie('user_id');
             res.redirect('/login');
@@ -182,6 +201,13 @@ pages.forEach(page => {
     });
 });
 
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(err.status || 500).json({ message: 'Internal Server Error', code: 500 });
+});
+
 app.use((_, res) => res.sendFile(path.join(__dirname, 'pages', '404.html')));
-const PORT = process.env.PORT;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
+});

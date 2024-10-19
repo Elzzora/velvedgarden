@@ -32,6 +32,7 @@ body {
 .container #logins {
   display: inline-block;
   padding: 12px 25px;
+  margin-top: 5px;
   font-size: 18px;
   color: white;
   background-color: #007bff;
@@ -45,6 +46,7 @@ body {
   display: inline-block;
   padding: 12px 25px;
   margin: 5px;
+  margin-top: 20px;
   font-size: 15px;
   color: #007bff;
   background-color: #fff;
