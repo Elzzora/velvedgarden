@@ -34,7 +34,7 @@ const fetchUserData = async (req, res, next) => {
     next();
 };
 
-app.get('/guilds', async (_, res) => {
+app.get('/api/guilds', async (_, res) => {
     try {
         const [guildResponse, channelsResponse] = await Promise.all([
             axios.get(`https://discord.com/api/v10/guilds/${process.env.GUILD_ID}?with_counts=true`, {
@@ -55,7 +55,7 @@ app.get('/guilds', async (_, res) => {
     }
 });
 
-app.post('/submit', fetchUserData, async (req, res) => {
+app.post('/submit/recruitments', fetchUserData, async (req, res) => {
     try {
         const user = req.user;
         if (!user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
@@ -95,7 +95,7 @@ app.all('/auth/discord', (req, res) => {
     res.redirect(process.env.AUTH_URL);
 });
 
-app.get('/profile', fetchUserData, async (req, res) => {
+app.get('/api/profile', fetchUserData, async (req, res) => {
     const user = req.user;
     if (!user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
 
@@ -145,7 +145,13 @@ app.get('/auth/discord/callback', async (req, res) => {
 });
 
 // ❗ KALO MAU NAMBAH PAGES, TAMBAH DISINI AJA ❗
-const pages = ['/', '/images', '/partners', '/logout', '/login'];
+const pages = [
+    '/',
+    '/images',
+    '/partners',
+    '/logout',
+    '/login'
+];
 
 pages.forEach(page => {
     app.all(page, async (req, res) => {

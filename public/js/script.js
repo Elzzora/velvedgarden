@@ -1,4 +1,3 @@
-// Smooth scroll for navigation
 document.querySelectorAll('nav ul li a').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -8,7 +7,6 @@ document.querySelectorAll('nav ul li a').forEach(anchor => {
     });
 });
 
-// Function to open modal
 function openModal(staffId) {
     var modal = document.getElementById(staffId + '-modal');
     modal.classList.add('active');
@@ -16,28 +14,23 @@ function openModal(staffId) {
     modalContent.classList.remove('closing');  // Remove closing animation class
 }
 
-// Function to close modal with animation
 function closeModal(staffId) {
     var modal = document.getElementById(staffId + '-modal');
     var modalContent = modal.querySelector('.modal-content');
     
     modalContent.classList.add('closing');  // Add closing animation class
-    
-    // Delay hiding modal to allow animation to finish
     setTimeout(function() {
         modal.classList.remove('active');
-    }, 300); // Match the duration of fadeOut animation (0.3s)
+    }, 300);
 }
 
-// Close the modal when the user clicks outside the modal content
 window.onclick = function(event) {
     var modals = document.querySelectorAll('.modal');
     modals.forEach(function(modal) {
         if (event.target == modal) {
             var modalContent = modal.querySelector('.modal-content');
-            modalContent.classList.add('closing');  // Add closing animation
+            modalContent.classList.add('closing');
             
-            // Delay hiding modal to allow animation to finish
             setTimeout(function() {
                 modal.classList.remove('active');
             }, 300);
@@ -47,7 +40,7 @@ window.onclick = function(event) {
 
 async function getCount() {
     try {
-      const res = await fetch('/guilds');
+      const res = await fetch('/api/guilds');
       const data = await res.json();
       document.getElementById('members-count').textContent = data?.members ?? 'fetch failed';
       document.getElementById('channels-count').textContent = data?.channels ?? 'fetch failed';

@@ -1,0 +1,82 @@
+  .container {
+    align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 100px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 36px;
+    color: #333;
+    margin-top: 50px;
+    margin-bottom: 40px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.gallery-item img, 
+.gallery-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-item:hover img,
+.gallery-item:hover video {
+    transform: scale(1.05);
+    transition: transform 0.5s;
+}
+
+.caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.gallery-item:hover .caption {
+    opacity: 1;
+}
+
+#homes {
+    display: inline-block;
+    padding: 12px 25px;
+    margin-top: 50px;
+    font-size: 15px;
+    color: #007bff;
+    background-color: #fff;
+    border: 2px solid #007bff;
+    text-decoration: none;
+    border-radius: 100px;
+    align-self: center;
+    transition: background-color 0.3s;
+}
+
+#homes:hover {
+    color: white;
+    background-color: black;
+    border: 2px solid black;
+}
