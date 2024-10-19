@@ -1,8 +1,8 @@
 const form = document.getElementById('recruitment-form');
+const submitButton = form.querySelector('button');
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const submitButton = form.querySelector('button');
   submitButton.classList.add('loading');
   submitButton.disabled = true;
 
@@ -46,6 +46,8 @@ function showAlert(message, type = 'success') {
 function closeAlert() {
   const type = document.getElementById('alertMessage').alertTypes;
   document.getElementById('customAlert').style.display = 'none';
+  submitButton.classList.remove('loading');
+  submitButton.disabled = false;
   if (type === 'success') {
     return window.location.href = '/logout';
   } else {
