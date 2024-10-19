@@ -10,11 +10,20 @@
 </head>
 <body>
     <div align="center" class="container">
-        <img src="/images/VGblank.png" alt="Logo" class="logo-img">
-        <h1>Velved Garden</h1>
+        <img id="avatar" style="border-radius: 100px;" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar" class="logo-img">
+        <h1 id="names">Loading...</h1>
         <a id="logins" href="/recruitments"><strong>Recruitments</strong></a>
         <a id="logins" href="/feedback"><strong>Rating & Feedback</strong></a>
         <a id="homes" href="/"><strong>Back to Home</strong></a>
     </div>
 </body>
+    <script>
+        getProfile()
+        async function getProfile() {
+            const res = await fetch('/api/profile');
+            const data = await res.json();
+            document.getElementById('names').textContent = `@${data.name}` || 'N/A';
+            document.getElementById('avatar').textContent = data.avatar || 'https://cdn.discordapp.com/embed/avatars/0.png';
+        }
+    </script>
 </html>
