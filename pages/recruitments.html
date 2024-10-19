@@ -315,7 +315,7 @@
       };
 
       try {
-        const response = await fetch('/submit', {
+        const response = await fetch('/submit/requirements', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
@@ -345,7 +345,7 @@
     }
 
     async function getProfile() {
-      const res = await fetch('/profile');
+      const res = await fetch('/api/profile');
       const data = await res.json();
       document.getElementById('profile-name').textContent = data.name ? `@${data.name}` : 'N/A';
       document.getElementById('profile-image').src = data.avatar ?? `https://cdn.discordapp.com/embed/avatars/0.png`;
