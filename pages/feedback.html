@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Recruitment</title>
+  <link rel="stylesheet" href="/css/recruitments.css">
+  <link rel="icon" href="/images/VGdiscord.png" type="image/x-icon">
+</head>
+<body>
+  <div class="container">
+    <h1>Staff Recruitment Form</h1>
+    <div class="profile">
+      <img id="profile-image" width="100" src="https://cdn.discordapp.com/embed/avatars/0.png">
+      <p id="profile-name">Loading...</p>
+    </div>
+    <form id="recruitment-form">
+      <div class="form-group">
+        <label for="position"><strong>POSITION</strong></label>
+        <div class="custom-select">
+          <div class="selected">Select a position</div>
+          <div class="options">
+            <div class="option" data-value="moderator">⭐⭐⭐⭐⭐</div>
+            <div class="option" data-value="moderator">⭐⭐⭐⭐</div>
+            <div class="option" data-value="designer">⭐⭐⭐</div>
+            <div class="option" data-value="partner manager">⭐⭐</div>
+            <div class="option" data-value="moderator">⭐</div>
+          </div>
+          <input type="hidden" id="position" name="position" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="reason"><strong>REASON</strong></label>
+        <textarea id="reason" name="reason" rows="4" placeholder="blabla" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="experience"><strong>SUGGESTION</strong></label>
+        <textarea id="experience" name="experience" rows="4" placeholder="Describe your experience" required></textarea>
+      </div>
+      <button type="submit"><strong>SUBMIT FORM</strong></button>
+    </form>
+    <a id="homes" href="/logout"><strong>LOGOUT</strong></a>
+  </div>
+  <div id="customAlert" class="custom-alert">
+    <div class="alert-content">
+      <p id="alertMessage"></p>
+      <button onclick="closeAlert()">OK</button>
+    </div>
+  </div>
+  <script src="/js/script.js"></script>
+  <script src="/js/feedback.js"></script>
+</body>
+</html>
