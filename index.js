@@ -94,9 +94,7 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                 .setTitle(`@${user.user_username}`)
                 .setAuthor({
                     name: 'New Rating Submitted By:',
-                    iconURL: user.user_avatar
-                        ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
-                        : `https://cdn.discordapp.com/embed/avatars/0.png`
+                    iconURL: 'https://velvedgarden.vercel.app/images/VGdiscord.png'
                 })
                 .addFields(
                     { name: 'Rating', value: data?.rating || 'N/A' },
