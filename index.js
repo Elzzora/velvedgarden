@@ -55,7 +55,7 @@ app.get('/api/guilds', async (_, res) => {
     }
 });
 
-app.post('/submit/requirements', fetchUserData, async (req, res) => {
+app.post('/submit/recruitments', fetchUserData, async (req, res) => {
     try {
         const user = req.user;
         if (!user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
