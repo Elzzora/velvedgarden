@@ -9,14 +9,12 @@ form.addEventListener('submit', async (event) => {
 
   const formData = new FormData(form);
   const data = {
-    position: formData.get('staff'),
     rating: formData.get('rating'),
     reason: formData.get('reason') ?? 'N/A',
     suggestion: formData.get('suggestion') ?? 'N/A'
     
   };
-
-  if (!data.staff) return showAlert('You must select a staff to rate!', 'error');
+  
   if (!data.rating) return showAlert('You must select rating you want to send!', 'error');
   
   try {
