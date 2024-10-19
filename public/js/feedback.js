@@ -9,17 +9,18 @@ form.addEventListener('submit', async (event) => {
 
   const formData = new FormData(form);
   const data = {
-    position: formData.get('position'),
-    reason: formData.get('reason'),
-    experience: formData.get('experience')
+    position: formData.get('staff'),
+    rating: formData.get('rating'),
+    reason: formData.get('reason') ?? 'N/A',
+    suggestion: formData.get('suggestion') ?? 'N/A'
+    
   };
 
-  if (!data.position) return showAlert('You must select a position to apply for!', 'error');
-  if (!data.reason) return showAlert('You must include the reason why you want to apply!', 'error');
-  if (!data.experience) return showAlert(`You must include your experience as a staff before applying here! If you don't have any, fill with "none"`, 'error');
-
+  if (!data.staff) return showAlert('You must select a staff to rate!', 'error');
+  if (!data.rating) return showAlert('You must select rating you want to send!', 'error');
+  
   try {
-    const response = await fetch('/submit/recruitments', {
+    const response = await fetch('/submit/feedback', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
