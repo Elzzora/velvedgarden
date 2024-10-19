@@ -9,7 +9,7 @@ form.addEventListener('submit', async (event) => {
 
   const formData = new FormData(form);
   const data = {
-    rating: formData.get('rating'),
+    rating: formData.get('rating') ?? 'N/A',
     reason: formData.get('reason') ?? 'N/A',
     suggestion: formData.get('suggestion') ?? 'N/A'
     
