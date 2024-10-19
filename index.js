@@ -114,6 +114,11 @@ app.all('/recruitments', fetchUserData, (req, res) => {
     res.sendFile(path.join(__dirname, 'pages', 'recruitments.html'));
 });
 
+app.all('/feedback', fetchUserData, (req, res) => {
+    if (!req.user) return res.redirect('/login');
+    res.sendFile(path.join(__dirname, 'pages', 'feedback.html'));
+});
+
 app.all('/auth/discord', (req, res) => {
     res.clearCookie('user_id');
     res.redirect(process.env.AUTH_URL);
