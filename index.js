@@ -74,14 +74,6 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
     const data = req.body;
     const type = req.params?.type;
     const user = req.user;
-
-    const webhook = new WebhookClient({ url: type === 'recruitments' ? process.env.WEBHOOK : process.env.WEBHOOK_FEEDBACK });
-    const button = new ButtonBuilder()
-        .setURL(`https://velvedgarden.vercel.app/${type}`)
-        .setLabel(type === 'recruitments' ? 'Register Now!' : 'Submit Your Rating!')
-        .setStyle(ButtonStyle.Link);
-    const row = new ActionRowBuilder().addComponents(button);
-
     try {
         if (type === 'recruitments') {
             const embed = new EmbedBuilder()
@@ -98,6 +90,14 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                     : `https://cdn.discordapp.com/embed/avatars/0.png`)
                 .setTimestamp()
                 .setColor('Green');
+            
+            const webhook = new WebhookClient({ url: process.env.WEBHOOK });
+            const button = new ButtonBuilder()
+                .setURL(`https://velvedgarden.vercel.app/recruitments`)
+                .setLabel('Register Now!')
+                .setStyle(ButtonStyle.Link);
+            
+            const row = new ActionRowBuilder().addComponents(button);
             await webhook.send({ embeds: [embed], components: [row] });
         } else if (type === 'feedback') {
             const embed = new EmbedBuilder()
@@ -118,6 +118,14 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                     : `https://cdn.discordapp.com/embed/avatars/0.png`)
                 .setTimestamp()
                 .setColor('Yellow');
+
+            const webhook = new WebhookClient({ url: process.env.WEBHOOK_FEEDBACK });
+            const button = new ButtonBuilder()
+                .setURL(`https://velvedgarden.vercel.app/feedback`)
+                .setLabel('Sumbit Your Feedback!')
+                .setStyle(ButtonStyle.Link);
+            
+            const row = new ActionRowBuilder().addComponents(button);
             await webhook.send({ embeds: [embed], components: [row] });
         }
         res.status(200).json({ message: 'OK', code: 200 });
