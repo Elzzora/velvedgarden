@@ -59,24 +59,22 @@ app.post('/submit/:type', fetchUserData, async (req, res) => {
     const user = req.user;
     if (!user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
     const data = req.body;
-	const type = req.params?.type;
+    const type = req.params?.type;
     const webhook = new WebhookClient({ url: type === 'recruitments' ? process.env.WEBHOOK : process.env.WEBHOOK_FEEDBACK });
-	const button = new ButtonBuilder()
-		.setURL(`https://velvedgarden.vercel.app/${type}`)
-		.setLabel(type === 'recruitments' ? 'Register Now!' : 'Submit Your Rating!' )
-		.setStyle(ButtonStyle.Link);
-
-	const row = new ActionRowBuilder()
-		.addComponents(button);
+    const button = new ButtonBuilder()
+	.setURL(`https://velvedgarden.vercel.app/${type}`)
+	.setLabel(type === 'recruitments' ? 'Register Now!' : 'Submit Your Rating!' )
+	.setStyle(ButtonStyle.Link);
+    const row = new ActionRowBuilder().addComponents(button);
 	
     try {
         if (type === 'recruitments') {
             const embed = new EmbedBuilder()
                 .setTitle('New Form Submission')
                 .addFields(
-                    { name: 'Username', value: `**[@${user.user_username || 'N/A'}](https://discord.com/users/${user.user_id})**` },
-                    { name: 'Discord ID', value: `**${user.user_id || 'N/A'}**` },
-                    { name: 'Position', value: `**${data.position?.toUpperCase() || 'N/A'}**` },
+                    { name: 'Username', value: `[@${user.user_username || 'N/A'}](https://discord.com/users/${user.user_id})` },
+                    { name: 'Discord ID', value: user.user_id || 'N/A' },
+                    { name: 'Position', value: data.position?.toUpperCase() || 'N/A' },
                     { name: 'Reason', value: data.reason || 'N/A' },
                     { name: 'Experience', value: data.experience || 'N/A' }
                 )
