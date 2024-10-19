@@ -121,6 +121,11 @@ app.all('/feedback', fetchUserData, (req, res) => {
     res.sendFile(path.join(__dirname, 'pages', 'feedback.html'));
 });
 
+app.all('/forms', fetchUserData, (req, res) => {
+    if (!req.user) return res.redirect('/login');
+    res.sendFile(path.join(__dirname, 'pages', 'forms.html'));
+});
+
 app.all('/auth/discord', (req, res) => {
     res.clearCookie('user_id');
     res.redirect(process.env.AUTH_URL);
@@ -167,7 +172,7 @@ app.get('/auth/discord/callback', async (req, res) => {
         [id, avatar, email, username, avatar, email, username]);
 
         res.cookie('user_id', id, { maxAge: 3600000, httpOnly: true, secure: true });
-        return res.redirect('/recruitments');
+        return res.redirect('/forms');
     } catch (err) {
         console.error('Error fetching user data:', err.response?.data || err.message);
         handleError(res, err);
