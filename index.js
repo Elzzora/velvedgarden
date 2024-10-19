@@ -59,9 +59,18 @@ app.post('/submit/:type', fetchUserData, async (req, res) => {
     const user = req.user;
     if (!user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
     const data = req.body;
-    const webhook = new WebhookClient({ url: process.env.WEBHOOK });
+	const type = req.params?.type;
+    const webhook = new WebhookClient({ url: type === 'recruitments' ? process.env.WEBHOOK : process.env.WEBHOOK_FEEDBACK });
+	const button = new ButtonBuilder()
+		.setURL(`https://velvedgarden.vercel.app/${type}`)
+		.setLabel(type === 'recruitments' ? 'Register Now!' : 'Submit Your Rating!' )
+		.setStyle(ButtonStyle.Link);
+
+	const row = new ActionRowBuilder()
+		.addComponents(button);
+	
     try {
-        if (req.params?.type === 'recruitments') {
+        if (type === 'recruitments') {
             const embed = new EmbedBuilder()
                 .setTitle('New Form Submission')
                 .addFields(
@@ -76,8 +85,8 @@ app.post('/submit/:type', fetchUserData, async (req, res) => {
                     : `https://cdn.discordapp.com/embed/avatars/0.png`)
                 .setTimestamp()
                 .setColor('Green');
-            await webhook.send({ embeds: [embed] });
-        } else if (req.params?.type === 'feedback') {
+            await webhook.send({ embeds: [embed], components: [row] });
+        } else if (type === 'feedback') {
             const embed = new EmbedBuilder()
                 .setTitle(`@${user.user_username}`)
                 .setAuthor({
@@ -96,15 +105,7 @@ app.post('/submit/:type', fetchUserData, async (req, res) => {
                     : `https://cdn.discordapp.com/embed/avatars/0.png`)
                 .setTimestamp()
                 .setColor('Yellow');
-
-            const button = new ButtonBuilder()
-			    .setCustomId('cancel')
-			    .setLabel('Cancel')
-			    .setStyle(ButtonStyle.Secondary);
-
-		const row = new ActionRowBuilder()
-			.addComponents(cancel, confirm);
-            await webhook.send({ embeds: [embed] });
+            await webhook.send({ embeds: [embed], components: [row] });
         }
         res.status(200).json({ message: 'OK', code: 200 });
     } catch (err) {
