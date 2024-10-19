@@ -85,7 +85,46 @@
       transition: color 0.3s ease;
     }
 
-    input, textarea, select {
+    .custom-select {
+      position: relative;
+      width: 100%;
+    }
+
+    .selected {
+      background-color: #f9f9f9;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .options {
+        display: none;
+        position: flex;
+        background-color: white;
+        border: 1px solid #007bff;
+        border-radius: 8px;
+        width: 100%;
+        color: black;
+        z-index: 2000;
+        max-height: 150px;
+        overflow-y: auto;
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+    }
+
+    .option {
+      padding: 12px;
+      cursor: pointer;
+      border: 1px solid #ddd;
+    }
+
+    .option:hover {
+      background-color: blue;
+      color: white;
+    }
+
+    input, textarea {
       font-family: 'Arial', sans-serif;
       width: 100%;
       padding: 12px;
@@ -97,20 +136,18 @@
       background-color: #f9f9f9;
     }
 
-    input:focus, textarea:focus, select:focus {
+    input:focus, textarea:focus {
       border-color: #007bff;
       outline: none;
       box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
       background-color: #fff;
     }
 
-    input::placeholder, textarea::placeholder {
-      color: #bbb;
-      transition: color 0.3s;
-    }
-
-    input:focus::placeholder, textarea:focus::placeholder {
-      color: #007bff;
+    .options:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+      background-color: #fff;
     }
 
     button {
@@ -213,7 +250,7 @@
 
     .custom-alert button:hover {
       background-color: #0056b3;
-     }
+    }
   </style>
 </head>
 <body>
@@ -226,12 +263,15 @@
     <form id="recruitment-form">
       <div class="form-group">
         <label for="position"><strong>POSITION</strong></label>
-        <select id="position" name="position" required>
-          <option value="" disabled selected>Select a position</option>
-          <option value="moderator">Moderator</option>
-          <option value="designer">Designer</option>
-          <option value="partner manager">Partner Manager</option>
-        </select>
+        <div class="custom-select">
+          <div class="selected">Select a position</div>
+          <div class="options">
+            <div class="option" data-value="moderator">Moderator</div>
+            <div class="option" data-value="designer">Designer</div>
+            <div class="option" data-value="partner manager">Partner Manager</div>
+          </div>
+          <input type="hidden" id="position" name="position" required>
+        </div>
       </div>
       <div class="form-group">
         <label for="reason"><strong>REASON</strong></label>
@@ -260,7 +300,6 @@
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
-      // Disable the button and show loading spinner
       const submitButton = form.querySelector('button');
       submitButton.classList.add('loading');
       submitButton.disabled = true;
@@ -310,6 +349,34 @@
     }
 
     getProfile();
+
+    document.querySelectorAll('.custom-select .selected').forEach(selected => {
+      selected.addEventListener('click', function () {
+        const optionsContainer = this.nextElementSibling;
+        optionsContainer.style.display = optionsContainer.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+
+    document.querySelectorAll('.custom-select .option').forEach(option => {
+      option.addEventListener('click', function () {
+        const value = this.getAttribute('data-value');
+        const selectedDiv = this.closest('.custom-select').querySelector('.selected');
+        selectedDiv.textContent = this.textContent;
+        selectedDiv.nextElementSibling.style.display = 'none';
+
+        const input = this.closest('.custom-select').querySelector('input[type="hidden"]');
+        input.value = value;
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      const isClickInside = event.target.closest('.custom-select');
+      if (!isClickInside) {
+        document.querySelectorAll('.options').forEach(options => {
+          options.style.display = 'none';
+        });
+      }
+    });
   </script>
 </body>
 </html>
