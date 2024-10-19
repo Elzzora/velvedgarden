@@ -5,11 +5,15 @@ const cookieParser = require('cookie-parser');
 const { ButtonBuilder, ButtonStyle, ActionRowBuilder, WebhookClient, EmbedBuilder } = require('discord.js');
 const bodyParser = require('body-parser');
 const { createPool } = require('mysql2/promise');
+const cors = require('cors');
+const helmet = require('helmet');
 require('dotenv').config();
 
 const app = express();
 const db = createPool(process.env.DATABASE);
 
+app.use(cors());
+app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -30,6 +34,7 @@ const fetchUserData = async (req, res, next) => {
         req.user = userData.length > 0 ? userData[0] : null;
     } catch (err) {
         console.error(err);
+        return next(err);
     }
     next();
 };
@@ -68,13 +73,15 @@ app.get('/api/guilds', async (_, res) => {
 app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) => {
     const data = req.body;
     const type = req.params?.type;
+    const user = req.user;
+
     const webhook = new WebhookClient({ url: type === 'recruitments' ? process.env.WEBHOOK : process.env.WEBHOOK_FEEDBACK });
     const button = new ButtonBuilder()
-	.setURL(`https://velvedgarden.vercel.app/${type}`)
-	.setLabel(type === 'recruitments' ? 'Register Now!' : 'Submit Your Rating!' )
-	.setStyle(ButtonStyle.Link);
+        .setURL(`https://velvedgarden.vercel.app/${type}`)
+        .setLabel(type === 'recruitments' ? 'Register Now!' : 'Submit Your Rating!')
+        .setStyle(ButtonStyle.Link);
     const row = new ActionRowBuilder().addComponents(button);
-	
+
     try {
         if (type === 'recruitments') {
             const embed = new EmbedBuilder()
@@ -96,7 +103,7 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
             const embed = new EmbedBuilder()
                 .setTitle(`@${user.user_username}`)
                 .setAuthor({
-                    name: 'New Rating Subbited By:',
+                    name: 'New Rating Submitted By:',
                     iconURL: user.user_avatar
                         ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
                         : `https://cdn.discordapp.com/embed/avatars/0.png`
@@ -130,9 +137,9 @@ app.all('/auth/discord', (_, res) => {
 
 app.get('/api/profile', fetchUserData, isAuthenticatedJson, async (req, res) => {
     res.status(200).json({
-        name: user.user_username,
-        avatar: user.user_avatar
-            ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
+        name: req.user?.user_username,
+        avatar: req.user?.user_avatar
+            ? `https://cdn.discordapp.com/avatars/${req.user.user_id}/${req.user.user_avatar}`
             : `https://cdn.discordapp.com/embed/avatars/0.png`
     });
 });
@@ -194,5 +201,13 @@ pages.forEach(page => {
     });
 });
 
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(err.status || 500).json({ message: 'Internal Server Error', code: 500 });
+});
+
 app.use((_, res) => res.sendFile(path.join(__dirname, 'pages', '404.html')));
-app.listen(process.env.PORT);
+
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
+});
