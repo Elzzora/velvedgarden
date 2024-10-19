@@ -92,13 +92,7 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                 .setColor('Green');
             
             const webhook = new WebhookClient({ url: process.env.WEBHOOK });
-            const button = new ButtonBuilder()
-                .setURL(`https://velvedgarden.vercel.app/recruitments`)
-                .setLabel('Register Now!')
-                .setStyle(ButtonStyle.Link);
-            
-            const row = new ActionRowBuilder().addComponents(button);
-            await webhook.send({ embeds: [embed], components: [row] });
+            await webhook.send({ embeds: [embed] });
         } else if (type === 'feedback') {
             const embed = new EmbedBuilder()
                 .setTitle(`@${user.user_username}`)
@@ -120,13 +114,7 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                 .setColor('Yellow');
 
             const webhook = new WebhookClient({ url: process.env.WEBHOOK_FEEDBACK });
-            const button = new ButtonBuilder()
-                .setURL(`https://velvedgarden.vercel.app/feedback`)
-                .setLabel('Sumbit Your Feedback!')
-                .setStyle(ButtonStyle.Link);
-            
-            const row = new ActionRowBuilder().addComponents(button);
-            await webhook.send({ embeds: [embed], components: [row] });
+            await webhook.send({ embeds: [embed] });
         }
         res.status(200).json({ message: 'OK', code: 200 });
     } catch (err) {
