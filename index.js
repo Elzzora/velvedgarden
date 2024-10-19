@@ -120,7 +120,7 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
 
 app.all('/recruitments', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'recruitments.html')));
 app.all('/feedback', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'feedback.html')));
-app.all('/forms', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'forms.html')));
+app.all('/profile', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'profile.html')));
 
 app.all('/auth/discord', (_, res) => {
     res.clearCookie('user_id');
@@ -165,7 +165,7 @@ app.get('/auth/discord/callback', async (req, res) => {
         [id, avatar, email, username, avatar, email, username]);
 
         res.cookie('user_id', id, { maxAge: 3600000, httpOnly: true, secure: true });
-        return res.redirect('/forms');
+        return res.redirect('/profile');
     } catch (err) {
         console.error('Error fetching user data:', err.response?.data || err.message);
         handleError(res, err);
