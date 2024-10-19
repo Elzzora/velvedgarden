@@ -31,7 +31,7 @@ form.addEventListener('submit', async (event) => {
       showAlert('Failed to submit form! Try again later.', 'error');
     }
   } catch (error) {
-    showAlert('Failed to submit form! Try again later.', 'error');
+    showAlert('500: Internal Server Error', 'error');
   } finally {
     submitButton.classList.remove('loading');
     submitButton.disabled = false;
