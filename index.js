@@ -34,6 +34,16 @@ const fetchUserData = async (req, res, next) => {
     next();
 };
 
+const isAuthenticated = (req, res, next) => {
+    if (!req.user) return res.redirect('/login');
+    next();
+};
+
+const isAuthenticatedJson = (req, res, next) => {
+    if (!req.user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
+    next();
+};
+
 app.get('/api/guilds', async (_, res) => {
     try {
         const [guildResponse, channelsResponse] = await Promise.all([
@@ -55,9 +65,7 @@ app.get('/api/guilds', async (_, res) => {
     }
 });
 
-app.post('/submit/:type', fetchUserData, async (req, res) => {
-    const user = req.user;
-    if (!user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
+app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) => {
     const data = req.body;
     const type = req.params?.type;
     const webhook = new WebhookClient({ url: type === 'recruitments' ? process.env.WEBHOOK : process.env.WEBHOOK_FEEDBACK });
@@ -111,30 +119,16 @@ app.post('/submit/:type', fetchUserData, async (req, res) => {
     }
 });
 
-app.all('/recruitments', fetchUserData, (req, res) => {
-    if (!req.user) return res.redirect('/login');
-    res.sendFile(path.join(__dirname, 'pages', 'recruitments.html'));
-});
+app.all('/recruitments', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'recruitments.html')));
+app.all('/feedback', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'feedback.html')));
+app.all('/forms', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'forms.html')));
 
-app.all('/feedback', fetchUserData, (req, res) => {
-    if (!req.user) return res.redirect('/login');
-    res.sendFile(path.join(__dirname, 'pages', 'feedback.html'));
-});
-
-app.all('/forms', fetchUserData, (req, res) => {
-    if (!req.user) return res.redirect('/login');
-    res.sendFile(path.join(__dirname, 'pages', 'forms.html'));
-});
-
-app.all('/auth/discord', (req, res) => {
+app.all('/auth/discord', (_, res) => {
     res.clearCookie('user_id');
     res.redirect(process.env.AUTH_URL);
 });
 
-app.get('/api/profile', fetchUserData, async (req, res) => {
-    const user = req.user;
-    if (!user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
-
+app.get('/api/profile', fetchUserData, isAuthenticatedJson, async (req, res) => {
     res.status(200).json({
         name: user.user_username,
         avatar: user.user_avatar
@@ -190,7 +184,7 @@ const pages = [
 ];
 
 pages.forEach(page => {
-    app.all(page, async (req, res) => {
+    app.all(page, async (_, res) => {
         if (page === '/logout') {
             res.clearCookie('user_id');
             res.redirect('/login');
@@ -201,5 +195,4 @@ pages.forEach(page => {
 });
 
 app.use((_, res) => res.sendFile(path.join(__dirname, 'pages', '404.html')));
-const PORT = process.env.PORT;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(process.env.PORT);
