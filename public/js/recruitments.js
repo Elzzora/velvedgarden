@@ -9,9 +9,9 @@ form.addEventListener('submit', async (event) => {
 
   const formData = new FormData(form);
   const data = {
-    position: formData.get('position'),
-    reason: formData.get('reason'),
-    experience: formData.get('experience')
+    position: formData.get('position') ?? 'N/A',
+    reason: formData.get('reason') ?? 'N/A',
+    experience: formData.get('experience') ?? 'N/A'
   };
 
   if (!data.position) return showAlert('You must select a position to apply for!', 'error');
