@@ -7,14 +7,15 @@ form.addEventListener('submit', async (event) => {
   submitButton.disabled = true;
 
   const formData = new FormData(form);
-  if (!formData.get('position')) return showAlert('You must select a position to apply for!');
-  if (!formData.get('reason')) return showAlert('You must include the reason why you want to apply!');
-  if (!formData.get('experience')) return showAlert(`You must include your experience as a staff before applying here! If you don't have any, fill with "none"`);
   const data = {
     position: formData.get('position'),
     reason: formData.get('reason'),
     experience: formData.get('experience')
   };
+
+  if (!data.position) return showAlert('You must select a position to apply for!', 'error');
+  if (!data.reason) return showAlert('You must include the reason why you want to apply!', 'error');
+  if (!data.experience) return showAlert(`You must include your experience as a staff before applying here! If you don't have any, fill with "none"`, 'error');
 
   try {
     const response = await fetch('/submit/recruitments', {
@@ -24,26 +25,32 @@ form.addEventListener('submit', async (event) => {
     });
 
     if (response.ok) {
-      showAlert('Thank you for submitting your application! Make sure you are already joined to our Discord server!');
+      showAlert('Thank you for submitting your application! Make sure you are already joined to our Discord server!', 'success');
     } else {
-      showAlert('Failed to submit form! Try again later.');
+      showAlert('Failed to submit form! Try again later.', 'error');
     }
   } catch (error) {
-    showAlert('Failed to submit form! Try again later.');
+    showAlert('Failed to submit form! Try again later.', 'error');
   } finally {
     submitButton.classList.remove('loading');
     submitButton.disabled = false;
   }
 });
 
-function showAlert(message) {
+function showAlert(message, type = 'success') {
   document.getElementById('alertMessage').innerText = message;
   document.getElementById('customAlert').style.display = 'flex';
+  document.getElementById('alertMessage').alertTypes = type ?? 'success';
 }
 
 function closeAlert() {
+  const type = document.getElementById('alertMessage').alertTypes;
   document.getElementById('customAlert').style.display = 'none';
-  window.location.href = '/logout';
+  if (type === 'success') {
+    return window.location.href = '/logout';
+  } else {
+    return document.getElementById('alertMessage').alertTypes = 'null';
+  }
 }
 
 async function getProfile() {
