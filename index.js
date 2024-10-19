@@ -2,18 +2,14 @@ const express = require('express');
 const path = require('path');
 const axios = require('axios');
 const cookieParser = require('cookie-parser');
-const { ButtonBuilder, ButtonStyle, ActionRowBuilder, WebhookClient, EmbedBuilder } = require('discord.js');
+const { WebhookClient, EmbedBuilder } = require('discord.js');
 const bodyParser = require('body-parser');
 const { createPool } = require('mysql2/promise');
-const cors = require('cors');
-const helmet = require('helmet');
 require('dotenv').config();
 
 const app = express();
 const db = createPool(process.env.DATABASE);
 
-app.use(cors());
-app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -74,14 +70,6 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
     const data = req.body;
     const type = req.params?.type;
     const user = req.user;
-
-    const webhook = new WebhookClient({ url: type === 'recruitments' ? process.env.WEBHOOK : process.env.WEBHOOK_FEEDBACK });
-    const button = new ButtonBuilder()
-        .setURL(`https://velvedgarden.vercel.app/${type}`)
-        .setLabel(type === 'recruitments' ? 'Register Now!' : 'Submit Your Rating!')
-        .setStyle(ButtonStyle.Link);
-    const row = new ActionRowBuilder().addComponents(button);
-
     try {
         if (type === 'recruitments') {
             const embed = new EmbedBuilder()
@@ -98,7 +86,9 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                     : `https://cdn.discordapp.com/embed/avatars/0.png`)
                 .setTimestamp()
                 .setColor('Green');
-            await webhook.send({ embeds: [embed], components: [row] });
+            
+            const webhook = new WebhookClient({ url: process.env.WEBHOOK });
+            await webhook.send({ embeds: [embed] });
         } else if (type === 'feedback') {
             const embed = new EmbedBuilder()
                 .setTitle(`@${user.user_username}`)
@@ -118,7 +108,9 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                     : `https://cdn.discordapp.com/embed/avatars/0.png`)
                 .setTimestamp()
                 .setColor('Yellow');
-            await webhook.send({ embeds: [embed], components: [row] });
+
+            const webhook = new WebhookClient({ url: process.env.WEBHOOK_FEEDBACK });
+            await webhook.send({ embeds: [embed] });
         }
         res.status(200).json({ message: 'OK', code: 200 });
     } catch (err) {
