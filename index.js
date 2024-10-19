@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const axios = require('axios');
 const cookieParser = require('cookie-parser');
-const { WebhookClient, EmbedBuilder } = require('discord.js');
+const { ButtonBuilder, ButtonStyle, ActionRowBuilder, WebhookClient, EmbedBuilder } = require('discord.js');
 const bodyParser = require('body-parser');
 const { createPool } = require('mysql2/promise');
 require('dotenv').config();
@@ -65,7 +65,7 @@ app.post('/submit/:type', fetchUserData, async (req, res) => {
             const embed = new EmbedBuilder()
                 .setTitle('New Form Submission')
                 .addFields(
-                    { name: 'Username', value: `**[${user.user_username || 'N/A'}](https://discord.com/users/${user.user_id})**` },
+                    { name: 'Username', value: `**[@${user.user_username || 'N/A'}](https://discord.com/users/${user.user_id})**` },
                     { name: 'Discord ID', value: `**${user.user_id || 'N/A'}**` },
                     { name: 'Position', value: `**${data.position?.toUpperCase() || 'N/A'}**` },
                     { name: 'Reason', value: data.reason || 'N/A' },
@@ -79,17 +79,31 @@ app.post('/submit/:type', fetchUserData, async (req, res) => {
             await webhook.send({ embeds: [embed] });
         } else if (req.params?.type === 'feedback') {
             const embed = new EmbedBuilder()
-                .setTitle('New Rating Submission')
+                .setTitle(`@${user.user_username}`)
+                .setAuthor({
+                    name: 'New Rating Subbited By:',
+                    iconURL: user.user_avatar
+                        ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
+                        : `https://cdn.discordapp.com/embed/avatars/0.png`
+                })
                 .addFields(
-                    { name: 'Rating', value: data.rating ?? 'N/A' },
-                    { name: 'Reason', value: data.reason ?? 'N/A' },
-                    { name: 'Suggestion', value: data.suggestion ?? 'N/A' }
+                    { name: 'Rating', value: data?.rating || 'N/A' },
+                    { name: 'Reason', value: data?.reason || 'N/A' },
+                    { name: 'Suggestion', value: data?.suggestion || 'N/A' }
                 )
                 .setThumbnail(user.user_avatar
                     ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
                     : `https://cdn.discordapp.com/embed/avatars/0.png`)
                 .setTimestamp()
                 .setColor('Yellow');
+
+            const button = new ButtonBuilder()
+			    .setCustomId('cancel')
+			    .setLabel('Cancel')
+			    .setStyle(ButtonStyle.Secondary);
+
+		const row = new ActionRowBuilder()
+			.addComponents(cancel, confirm);
             await webhook.send({ embeds: [embed] });
         }
         res.status(200).json({ message: 'OK', code: 200 });
