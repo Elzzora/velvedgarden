@@ -1,5 +1,6 @@
 const form = document.getElementById('recruitment-form');
 const submitButton = form.querySelector('button');
+getProfile();
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -61,8 +62,6 @@ async function getProfile() {
   document.getElementById('profile-name').textContent = data.name ? `@${data.name}` : 'N/A';
   document.getElementById('profile-image').src = data.avatar ?? `https://cdn.discordapp.com/embed/avatars/0.png`;
 }
-
-getProfile();
 
 document.querySelectorAll('.custom-select .selected').forEach(selected => {
   selected.addEventListener('click', function () {
