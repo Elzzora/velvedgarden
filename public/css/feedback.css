@@ -113,11 +113,6 @@ label {
   border: 1px solid #ddd;
 }
 
-.option img {
-  border-radius: 100%;
-  margin-right: 10px;
-}
-
 .option:hover {
   background-color: blue;
   color: white;

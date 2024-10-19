@@ -93,8 +93,7 @@ if (req.params?.type === 'recruitments') {
         const embed = new EmbedBuilder()
             .setTitle('New Rating Submission')
             .addFields(
-                { name: 'Staff', value: data?.staff },
-                { name: 'Rating', value: data?.rating },
+                { name: 'Rating', value: data?.rating ?? 'N/A' },
                 { name: 'Reason', value: data?.reason ?? 'N/A' },
                 { name: 'Suggestion', value: data?.suggestion ?? 'N/A' }
             )
