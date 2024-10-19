@@ -5,15 +5,11 @@ const cookieParser = require('cookie-parser');
 const { ButtonBuilder, ButtonStyle, ActionRowBuilder, WebhookClient, EmbedBuilder } = require('discord.js');
 const bodyParser = require('body-parser');
 const { createPool } = require('mysql2/promise');
-const cors = require('cors');
-const helmet = require('helmet');
 require('dotenv').config();
 
 const app = express();
 const db = createPool(process.env.DATABASE);
 
-app.use(cors());
-app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
