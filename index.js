@@ -145,7 +145,13 @@ app.get('/auth/discord/callback', async (req, res) => {
 });
 
 // ❗ KALO MAU NAMBAH PAGES, TAMBAH DISINI AJA ❗
-const pages = ['/', '/images', '/partners', '/logout', '/login'];
+const pages = [
+    '/',
+    '/images',
+    '/partners',
+    '/logout',
+    '/login'
+];
 
 pages.forEach(page => {
     app.all(page, async (req, res) => {
