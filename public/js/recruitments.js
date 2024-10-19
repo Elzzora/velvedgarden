@@ -26,12 +26,12 @@ form.addEventListener('submit', async (event) => {
     });
 
     if (response.ok) {
-      showAlert('Thank you for submitting your application! Make sure you are already joined to our Discord server!', 'success');
+      showAlert('✅  Thank you for submitting your application! Make sure you are already joined to our Discord server!', 'success');
     } else {
       showAlert('Failed to submit form! Try again later.', 'error');
     }
   } catch (error) {
-    showAlert('Failed to submit form! Try again later.', 'error');
+    showAlert('500: Internal Server Error', 'error');
   } finally {
     submitButton.classList.remove('loading');
     submitButton.disabled = false;
