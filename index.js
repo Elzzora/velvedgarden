@@ -56,56 +56,46 @@ app.get('/api/guilds', async (_, res) => {
 });
 
 app.post('/submit/:type', fetchUserData, async (req, res) => {
-if (req.params?.type === 'recruitments') {
+    const user = req.user;
+    if (!user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
+    const data = req.body;
+    const webhook = new WebhookClient({ url: process.env.WEBHOOK });
     try {
-        const user = req.user;
-        if (!user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
-        
-        const data = req.body;
-        const webhook = new WebhookClient({ url: process.env.WEBHOOK });
-
-        const embed = new EmbedBuilder()
-            .setTitle('New Form Submission')
-            .addFields(
-                { name: 'Username', value: `**[${user.user_username || 'N/A'}](https://discord.com/users/${user.user_id})**` },
-                { name: 'Discord ID', value: `**${user.user_id || 'N/A'}**` },
-                { name: 'Position', value: `**${data?.position?.toUpperCase() || 'N/A'}**` },
-                { name: 'Reason', value: data?.reason || 'N/A' },
-                { name: 'Experience', value: data?.experience || 'N/A' }
-            )
-            .setThumbnail(user.user_avatar
-                ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
-                : `https://cdn.discordapp.com/embed/avatars/0.png`)
-            .setTimestamp()
-            .setColor('Green');
-
-        await webhook.send({ embeds: [embed] });
+        if (req.params?.type === 'recruitments') {
+            const embed = new EmbedBuilder()
+                .setTitle('New Form Submission')
+                .addFields(
+                    { name: 'Username', value: `**[${user.user_username || 'N/A'}](https://discord.com/users/${user.user_id})**` },
+                    { name: 'Discord ID', value: `**${user.user_id || 'N/A'}**` },
+                    { name: 'Position', value: `**${data.position?.toUpperCase() || 'N/A'}**` },
+                    { name: 'Reason', value: data.reason || 'N/A' },
+                    { name: 'Experience', value: data.experience || 'N/A' }
+                )
+                .setThumbnail(user.user_avatar
+                    ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
+                    : `https://cdn.discordapp.com/embed/avatars/0.png`)
+                .setTimestamp()
+                .setColor('Green');
+            await webhook.send({ embeds: [embed] });
+        } else if (req.params?.type === 'feedback') {
+            const embed = new EmbedBuilder()
+                .setTitle('New Rating Submission')
+                .addFields(
+                    { name: 'Rating', value: data.rating ?? 'N/A' },
+                    { name: 'Reason', value: data.reason ?? 'N/A' },
+                    { name: 'Suggestion', value: data.suggestion ?? 'N/A' }
+                )
+                .setThumbnail(user.user_avatar
+                    ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
+                    : `https://cdn.discordapp.com/embed/avatars/0.png`)
+                .setTimestamp()
+                .setColor('Yellow');
+            await webhook.send({ embeds: [embed] });
+        }
         res.status(200).json({ message: 'OK', code: 200 });
     } catch (err) {
         handleError(res, err);
     }
-} else if (req.params?.type === 'feedback') {
-    if (!user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
-        
-        const data = req.body;
-        const webhook = new WebhookClient({ url: process.env.WEBHOOK });
-
-        const embed = new EmbedBuilder()
-            .setTitle('New Rating Submission')
-            .addFields(
-                { name: 'Rating', value: data?.rating ?? 'N/A' },
-                { name: 'Reason', value: data?.reason ?? 'N/A' },
-                { name: 'Suggestion', value: data?.suggestion ?? 'N/A' }
-            )
-            .setThumbnail(user.user_avatar
-                ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
-                : `https://cdn.discordapp.com/embed/avatars/0.png`)
-            .setTimestamp()
-            .setColor('Yellow');
-
-        await webhook.send({ embeds: [embed] });
-        res.status(200).json({ message: 'OK', code: 200 });
-}
 });
 
 app.all('/recruitments', fetchUserData, (req, res) => {
