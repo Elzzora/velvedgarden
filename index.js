@@ -55,7 +55,8 @@ app.get('/api/guilds', async (_, res) => {
     }
 });
 
-app.post('/submit/recruitments', fetchUserData, async (req, res) => {
+app.post('/submit/:type', fetchUserData, async (req, res) => {
+if (req.params?.type === 'recruitments') {
     try {
         const user = req.user;
         if (!user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
@@ -83,6 +84,29 @@ app.post('/submit/recruitments', fetchUserData, async (req, res) => {
     } catch (err) {
         handleError(res, err);
     }
+} else if (req.params?.type === 'feedback') {
+    if (!user) return res.status(401).json({ message: 'Unauthorized', code: 401 });
+        
+        const data = req.body;
+        const webhook = new WebhookClient({ url: process.env.WEBHOOK });
+
+        const embed = new EmbedBuilder()
+            .setTitle('New Rating Submission')
+            .addFields(
+                { name: 'Staff', value: data?.staff },
+                { name: 'Rating', value: data?.rating },
+                { name: 'Reason', value: data?.reason ?? 'N/A' },
+                { name: 'Suggestion', value: data?.suggestion ?? 'N/A' }
+            )
+            .setThumbnail(user.user_avatar
+                ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
+                : `https://cdn.discordapp.com/embed/avatars/0.png`)
+            .setTimestamp()
+            .setColor('Yellow');
+
+        await webhook.send({ embeds: [embed] });
+        res.status(200).json({ message: 'OK', code: 200 });
+}
 });
 
 app.all('/recruitments', fetchUserData, (req, res) => {
