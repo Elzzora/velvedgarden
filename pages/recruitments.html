@@ -305,6 +305,9 @@
       submitButton.disabled = true;
 
       const formData = new FormData(form);
+      if (!formData.get('position')) return showAlert('You must select a position to apply for!');
+      if (!formData.get('reason')) return showAlert('You must include the reason why you want to apply!');
+      if (!formData.get('experience')) return showAlert(`You must include your experience as a staff before applying here! If you don't have any, fill with "none"`);
       const data = {
         position: formData.get('position'),
         reason: formData.get('reason'),
