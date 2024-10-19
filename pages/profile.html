@@ -23,7 +23,7 @@
             const res = await fetch('/api/profile');
             const data = await res.json();
             document.getElementById('names').textContent = `@${data.name}` || 'N/A';
-            document.getElementById('avatar').textContent = data.avatar || 'https://cdn.discordapp.com/embed/avatars/0.png';
+            document.getElementById('avatar').src = data.avatar || 'https://cdn.discordapp.com/embed/avatars/0.png';
         }
     </script>
 </html>
