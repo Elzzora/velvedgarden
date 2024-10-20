@@ -177,7 +177,7 @@ const pages = [
 ];
 
 pages.forEach(page => {
-    app.all(page, async (_, res) => {
+    app.all(page, async (req, res) => {
         if (page === '/logout') {
             res.clearCookie('user_id');
             res.redirect('/login');
