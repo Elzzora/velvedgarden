@@ -48,12 +48,8 @@ const isAuthenticatedJson = (req, res, next) => {
 app.get('/api/guilds', async (_, res) => {
     try {
         const [guildResponse, channelsResponse] = await Promise.all([
-            axios.get(`https://discord.com/api/v10/guilds/${process.env.GUILD_ID}?with_counts=true`, {
-                headers: { 'Authorization': `Bot ${process.env.TOKEN}` }
-            }),
-            axios.get(`https://discord.com/api/v10/guilds/${process.env.GUILD_ID}/channels`, {
-                headers: { 'Authorization': `Bot ${process.env.TOKEN}` }
-            }),
+            axios.get(`https://discord.com/api/v10/guilds/${process.env.GUILD_ID}?with_counts=true`, { headers: { 'Authorization': `Bot ${process.env.TOKEN}` }}),
+            axios.get(`https://discord.com/api/v10/guilds/${process.env.GUILD_ID}/channels`, { headers: { 'Authorization': `Bot ${process.env.TOKEN}` }})
         ]);
 
         res.json({
@@ -171,7 +167,7 @@ app.get('/auth/discord/callback', async (req, res) => {
     }
 });
 
-// ❗ KALO MAU NAMBAH PAGES, TAMBAH DISINI AJA ❗
+// ❗ KALO MAU NAMBAH PAGES, TAMBAHIN INI AJA ❗
 const pages = [
     '/',
     '/images',
@@ -187,17 +183,15 @@ pages.forEach(page => {
             res.redirect('/login');
             return;
         }
+        if (page === '/login') {
+            if (req.cookies?.user_id) return res.redirect('/profile');
+            res.sendFile(path.join(__dirname, 'pages', 'login.html');
+            return;
+        }
         res.sendFile(path.join(__dirname, 'pages', page === '/' ? 'index.html' : `${page.substring(1)}.html`));
     });
 });
 
-app.use((err, req, res, next) => {
-    console.error(err);
-    res.status(err.status || 500).json({ message: 'Internal Server Error', code: 500 });
-});
-
+app.use((err, req, res, next) => res.status(err.status || 500).json({ message: 'Internal Server Error', code: 500, error: err.message || 'Unknown Error' }));
 app.use((_, res) => res.sendFile(path.join(__dirname, 'pages', '404.html')));
-
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
-});
+app.listen(process.env.PORT);
