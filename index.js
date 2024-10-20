@@ -79,7 +79,7 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                 )
                 .setThumbnail(user.user_avatar
                     ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
-                    : `https://cdn.discordapp.com/embed/avatars/0.png`)
+                    : `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 6)}.png`)
                 .setTimestamp()
                 .setColor('Green');
             
@@ -99,7 +99,7 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                 )
                 .setThumbnail(user.user_avatar
                     ? `https://cdn.discordapp.com/avatars/${user.user_id}/${user.user_avatar}`
-                    : `https://cdn.discordapp.com/embed/avatars/0.png`)
+                    : `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 6)}.png`)
                 .setTimestamp()
                 .setColor('Yellow');
 
@@ -126,7 +126,7 @@ app.get('/api/profile', fetchUserData, isAuthenticatedJson, async (req, res) => 
         name: req.user?.user_username,
         avatar: req.user?.user_avatar
             ? `https://cdn.discordapp.com/avatars/${req.user.user_id}/${req.user.user_avatar}`
-            : `https://cdn.discordapp.com/embed/avatars/0.png`
+            : `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 6)}.png`
     });
 });
 
