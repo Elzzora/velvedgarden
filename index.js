@@ -185,7 +185,7 @@ pages.forEach(page => {
         }
         if (page === '/login') {
             if (req.cookies?.user_id) return res.redirect('/profile');
-            res.sendFile(path.join(__dirname, 'pages', 'login.html');
+            res.sendFile(path.join(__dirname, 'pages', 'login.html'));
             return;
         }
         res.sendFile(path.join(__dirname, 'pages', page === '/' ? 'index.html' : `${page.substring(1)}.html`));
