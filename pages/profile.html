@@ -36,7 +36,7 @@
         async function getProfile() {
             const res = await fetch('/api/profile');
             const data = await res.json();
-            document.getElementById('names').textContent = `@${data.name}` || 'N/A';
+            document.getElementById('names').textContent = data.name ? `@${data.name}` : 'N/A';
             document.getElementById('avatar').src = data.avatar || `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 6)}.png`
         }
     </script>
