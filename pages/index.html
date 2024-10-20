@@ -53,11 +53,13 @@
         <div class="staff-content">
             <h2>Meet Our Staff</h2>
             <div class="staff-grid">
+                
                 <div class="staff-member" onclick="openModal('staff1')">
                     <img src="https://cdn.discordapp.com/avatars/1251874060711759984/32d8d9b7a5da26a1eea31de3d5ef2ad4.png?size=4096" alt="Elzzora">
                     <h3>Elzzora</h3>
                     <p>Owner</p>
                 </div>
+                
                 <div class="staff-member" onclick="openModal('staff2')">
                     <img src="https://cdn.discordapp.com/avatars/1058131180593102939/7a04af0889575c6e8d8497f72e3ffd90.png?size=4096" alt="Luminare">
                     <h3>Luminare</h3>
@@ -86,6 +88,7 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('staff1')">&times;</span>
         <h2>Elzzora</h2>
+        <p><strong>Role:</strong> Owner</p>
         <p><strong>Rating:</strong> 4.9/5</p>
     </div>
 </div>
@@ -93,6 +96,7 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('staff2')">&times;</span>
         <h2>Luminare</h2>
+        <p><strong>Role:</strong> Admin</p>
         <p><strong>Joined:</strong> 17 June 2024</p>
         <p><strong>Rating:</strong> 4.7/5</p>
     </div>
@@ -101,6 +105,7 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('staff3')">&times;</span>
         <h2>Astrohunt</h2>
+        <p><strong>Role:</strong> Admin</p>
         <p><strong>Joined:</strong> 9 June 2024</p>
         <p><strong>Rating:</strong> 4.5/5</p>
     </div>
@@ -109,6 +114,7 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('staff4')">&times;</span>
         <h2>Tyowk</h2>
+        <p><strong>Role:</strong> Developer</p>
         <p><strong>Joined:</strong> 16 October 2024</p>
         <p><strong>Rating:</strong> 4.1/5</p>
     </div>
@@ -152,7 +158,7 @@
                     <li><a href="#staff">Staff</a></li>
                     <li><a href="#statistics">Statistics</a></li>
                     <li><a href="/images">Images</a></li>
-                    <li><a href="/partners">Partner</a></li>
+                    <li><a href="/partners">Partners</a></li>
                     <li><a href="/feedback">Feedback</a></li>
                 </ul>
             </div>
@@ -171,5 +177,22 @@
     </div>
 </footer>
 <script src="/js/script.js"></script>
+<script>
+    getIcon();
+    async function getIcon() {
+        const images = document.querySelectorAll('.staff-member img');
+        for (const img of images) {
+            const imageCheck = new Image();
+            imageCheck.src = img.src;
+            const checkImage = new Promise((resolve) => {
+                imageCheck.onload = () => resolve(true);
+                imageCheck.onerror = () => resolve(false);
+            });
+            if (!await checkImage) {
+                img.src = `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 6)}.png`;
+            }
+        }
+    }
+</script>
 </body>
 </html>
