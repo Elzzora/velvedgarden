@@ -9,6 +9,24 @@
     <link rel="stylesheet" href="/css/login.css">
     <noscript>Your browser does not support JavaScript!</noscript>
 </head>
+<body>
+    <div align="center" class="container">
+        <img id="avatar" style="border-radius: 100px;" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar" class="logo-img">
+        <h1 style="font-size: 20px;" id="names">Loading...</h1>
+        <!--<a id="logins" href="/recruitments"><strong>Recruitments</strong></a>-->
+        <a id="logins" href="/feedback"><strong>Rating & Feedback</strong></a>
+        <a id="homes" href="/logout"><strong>Logout</strong></a>
+    </div>
+</body>
+<script>
+    getProfile()
+    async function getProfile() {
+        const res = await fetch('/api/profile');
+        const data = await res.json();
+        document.getElementById('names').textContent = data.name ? `@${data.name}` : 'N/A';
+        document.getElementById('avatar').src = data.avatar || `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 6)}.png`;
+    }
+</script>
 <style>
     .container #homes {
         background-color: white;
@@ -22,22 +40,4 @@
         background-color: darkred;
     }
 </style>
-<body>
-    <div align="center" class="container">
-        <img id="avatar" style="border-radius: 100px;" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar" class="logo-img">
-        <h1 style="font-size: 20px;" id="names">Loading...</h1>
-        <!--<a id="logins" href="/recruitments"><strong>Recruitments</strong></a>-->
-        <a id="logins" href="/feedback"><strong>Rating & Feedback</strong></a>
-        <a id="homes" href="/logout"><strong>Logout</strong></a>
-    </div>
-</body>
-    <script>
-        getProfile()
-        async function getProfile() {
-            const res = await fetch('/api/profile');
-            const data = await res.json();
-            document.getElementById('names').textContent = data.name ? `@${data.name}` : 'N/A';
-            document.getElementById('avatar').src = data.avatar || `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 6)}.png`;
-        }
-    </script>
 </html>
