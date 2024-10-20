@@ -1,3 +1,4 @@
+getCount();
 document.querySelectorAll('nav ul li a').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -42,13 +43,14 @@ async function getCount() {
     try {
       const res = await fetch('/api/guilds');
       const data = await res.json();
-      document.getElementById('members-count').textContent = data?.members ?? 'fetch failed';
-      document.getElementById('channels-count').textContent = data?.channels ?? 'fetch failed';
-      document.getElementById('actives-count').textContent = data?.actives ?? 'fetch failed';
+      document.getElementById('members-count').textContent = data?.members || 'fetch failed';
+      document.getElementById('channels-count').textContent = data?.channels || 'fetch failed';
+      document.getElementById('actives-count').textContent = data?.actives || 'fetch failed';
       document.getElementById('events-count').textContent = '0';
-    } catch (error) {
-      console.error('Error fetching server statistics:', error);
+    } catch (err) {
+      document.getElementById('members-count').textContent = 'fetch failed';
+      document.getElementById('channels-count').textContent = 'fetch failed';
+      document.getElementById('actives-count').textContent = 'fetch failed';
+      document.getElementById('events-count').textContent = 'fetch failed';
     }
 }
-
-getCount();
