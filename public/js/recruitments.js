@@ -60,7 +60,7 @@ async function getProfile() {
   const res = await fetch('/api/profile');
   const data = await res.json();
   document.getElementById('profile-name').textContent = data.name ? `@${data.name}` : 'N/A';
-  document.getElementById('profile-image').src = data.avatar || `https://cdn.discordapp.com/embed/avatars/0.png`;
+  document.getElementById('profile-image').src = data.avatar || `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 6)}.png`;
 }
 
 document.querySelectorAll('.custom-select .selected').forEach(selected => {
