@@ -62,6 +62,40 @@ app.get('/api/guilds', async (_, res) => {
     }
 });
 
+app.get('/api/ratings', async (req, res) => {
+    try {
+        const serverId = process.env.GUILD_ID;
+        const [ratingData] = await db.query('SELECT * FROM `rating` WHERE `server` = ?', [serverId]);
+        const rating = ratingData.length > 0 ? ratingData[0] : null;
+        if (!rating) return res.status(404).json({ message: 'Not Found', code: 404 });
+        
+        let totalUser = 0;
+        let totalRating = 0;
+
+        for (let key in rating) {
+            if (key === 'server') continue;
+            const count = rating[key];
+            if (count) {
+                totalUser += count;
+                totalRating += count * key;
+            }
+        }
+        return res.status(200).json({
+            averageRating: totalUser > 0 ? (totalRating / totalUser).toFixed(2) : 0,
+            totalUser: totalUser,
+            ratings: {
+                5: rating[5] || 0,
+                4: rating[4] || 0,
+                3: rating[3] || 0,
+                2: rating[2] || 0,
+                1: rating[1] || 0
+            }
+        });
+    } catch (err) {
+        handleError(res, err);
+    }
+});
+
 app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) => {
     const data = req.body;
     const type = req.params?.type;
