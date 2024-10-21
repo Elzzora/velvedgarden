@@ -145,6 +145,11 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
 
             const webhook = new WebhookClient({ url: process.env.WEBHOOK_FEEDBACK });
             await webhook.send({ embeds: [embed] });
+            const serverId = process.env.GUILD_ID;
+            const rating = data?.rating;
+            
+            await db.query('INSERT INTO `rating` (`server`, `5`, `4`, `3`, `2`, `1`) VALUES (?, 0, 0, 0, 0, 0) ON DUPLICATE KEY UPDATE `5` = 5 + CASE WHEN ? = 5 THEN 1 ELSE 0 END, `4` = 4 + CASE WHEN ? = 4 THEN 1 ELSE 0 END, `3` = 3 + CASE WHEN ? = 3 THEN 1 ELSE 0 END, `2` = 2 + CASE WHEN ? = 2 THEN 1 ELSE 0 END, `1` = 1 + CASE WHEN ? = 1 THEN 1 ELSE 0 END',
+            [serverId, rating, rating, rating, rating, rating]);
         }
         res.status(200).json({ message: 'OK', code: 200 });
     } catch (err) {
