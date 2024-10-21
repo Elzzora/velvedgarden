@@ -24,12 +24,10 @@ const handleError = (res, err) => {
 const fetchUserData = async (req, res, next) => {
     const userId = req.cookies.user_id;
     if (!userId) return next();
-
     try {
         const [userData] = await db.query('SELECT * FROM `discord` WHERE `user_id` = ?', [userId]);
         req.user = userData.length > 0 ? userData[0] : null;
     } catch (err) {
-        console.error(err);
         return next(err);
     }
     next();
@@ -51,7 +49,6 @@ app.get('/api/guilds', async (_, res) => {
             axios.get(`https://discord.com/api/v10/guilds/${process.env.GUILD_ID}?with_counts=true`, { headers: { 'Authorization': `Bot ${process.env.TOKEN}` }}),
             axios.get(`https://discord.com/api/v10/guilds/${process.env.GUILD_ID}/channels`, { headers: { 'Authorization': `Bot ${process.env.TOKEN}` }})
         ]);
-
         res.json({
             channels: channelsResponse.data.length,
             members: guildResponse.data.approximate_member_count,
@@ -178,7 +175,6 @@ app.get('/api/profile', fetchUserData, isAuthenticatedJson, async (req, res) => 
 app.get('/auth/discord/callback', async (req, res) => {
     const code = req.query.code;
     if (!code) return res.status(400).redirect('/login');
-
     try {
         const tokenResponse = await axios.post('https://discord.com/api/oauth2/token', new URLSearchParams({
             client_id: process.env.CLIENT_ID,
@@ -206,13 +202,11 @@ app.get('/auth/discord/callback', async (req, res) => {
         res.cookie('user_id', id, { maxAge: 3600000, httpOnly: true, secure: true });
         return res.redirect('/profile');
     } catch (err) {
-        console.error('Error fetching user data:', err.response?.data || err.message);
         handleError(res, err);
         res.redirect('/login');
     }
 });
 
-// ❗ KALO MAU NAMBAH PAGES, TAMBAHIN INI AJA ❗
 const pages = [
     '/',
     '/images',
