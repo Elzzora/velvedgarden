@@ -24,12 +24,10 @@ const handleError = (res, err) => {
 const fetchUserData = async (req, res, next) => {
     const userId = req.cookies.user_id;
     if (!userId) return next();
-
     try {
         const [userData] = await db.query('SELECT * FROM `discord` WHERE `user_id` = ?', [userId]);
         req.user = userData.length > 0 ? userData[0] : null;
     } catch (err) {
-        console.error(err);
         return next(err);
     }
     next();
@@ -51,11 +49,44 @@ app.get('/api/guilds', async (_, res) => {
             axios.get(`https://discord.com/api/v10/guilds/${process.env.GUILD_ID}?with_counts=true`, { headers: { 'Authorization': `Bot ${process.env.TOKEN}` }}),
             axios.get(`https://discord.com/api/v10/guilds/${process.env.GUILD_ID}/channels`, { headers: { 'Authorization': `Bot ${process.env.TOKEN}` }})
         ]);
-
         res.json({
             channels: channelsResponse.data.length,
             members: guildResponse.data.approximate_member_count,
             actives: guildResponse.data.approximate_presence_count
+        });
+    } catch (err) {
+        handleError(res, err);
+    }
+});
+
+app.get('/api/ratings', async (req, res) => {
+    try {
+        const serverId = process.env.GUILD_ID;
+        const [ratingData] = await db.query('SELECT * FROM `rating` WHERE `server` = ?', [serverId]);
+        const rating = ratingData.length > 0 ? ratingData[0] : null;
+        if (!rating) return res.status(404).json({ message: 'Not Found', code: 404 });
+        
+        let totalUser = 0;
+        let totalRating = 0;
+
+        for (let key in rating) {
+            if (key === 'server') continue;
+            const count = rating[key];
+            if (count) {
+                totalUser += count;
+                totalRating += count * key;
+            }
+        }
+        return res.status(200).json({
+            averageRating: totalUser > 0 ? (totalRating / totalUser).toFixed(2) : 0,
+            totalUser: totalUser,
+            ratings: {
+                5: rating[5] || 0,
+                4: rating[4] || 0,
+                3: rating[3] || 0,
+                2: rating[2] || 0,
+                1: rating[1] || 0
+            }
         });
     } catch (err) {
         handleError(res, err);
@@ -93,7 +124,13 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                     iconURL: 'https://velvedgarden.vercel.app/images/VGdiscord.png'
                 })
                 .addFields(
-                    { name: 'Rating', value: data?.rating || 'N/A' },
+                    { name: 'Rating', value: data?.rating?
+                        .replace('5', '⭐⭐⭐⭐⭐')
+                        .replace('4', '⭐⭐⭐⭐')
+                        .replace('3', '⭐⭐⭐')
+                        .replace('2', '⭐⭐')
+                        .replace('1', '⭐') || 'N/A'
+                    },
                     { name: 'Reason', value: data?.reason || 'N/A' },
                     { name: 'Suggestion', value: data?.suggestion || 'N/A' }
                 )
@@ -105,6 +142,11 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
 
             const webhook = new WebhookClient({ url: process.env.WEBHOOK_FEEDBACK });
             await webhook.send({ embeds: [embed] });
+            const serverId = process.env.GUILD_ID;
+            const rating = data?.rating;
+            
+            await db.query('INSERT INTO `rating` (`server`, `5`, `4`, `3`, `2`, `1`) VALUES (?, 0, 0, 0, 0, 0) ON DUPLICATE KEY UPDATE `5` = 5 + CASE WHEN ? = 5 THEN 1 ELSE 0 END, `4` = 4 + CASE WHEN ? = 4 THEN 1 ELSE 0 END, `3` = 3 + CASE WHEN ? = 3 THEN 1 ELSE 0 END, `2` = 2 + CASE WHEN ? = 2 THEN 1 ELSE 0 END, `1` = 1 + CASE WHEN ? = 1 THEN 1 ELSE 0 END',
+            [serverId, rating, rating, rating, rating, rating]);
         }
         res.status(200).json({ message: 'OK', code: 200 });
     } catch (err) {
@@ -133,7 +175,6 @@ app.get('/api/profile', fetchUserData, isAuthenticatedJson, async (req, res) => 
 app.get('/auth/discord/callback', async (req, res) => {
     const code = req.query.code;
     if (!code) return res.status(400).redirect('/login');
-
     try {
         const tokenResponse = await axios.post('https://discord.com/api/oauth2/token', new URLSearchParams({
             client_id: process.env.CLIENT_ID,
@@ -161,13 +202,11 @@ app.get('/auth/discord/callback', async (req, res) => {
         res.cookie('user_id', id, { maxAge: 3600000, httpOnly: true, secure: true });
         return res.redirect('/profile');
     } catch (err) {
-        console.error('Error fetching user data:', err.response?.data || err.message);
         handleError(res, err);
         res.redirect('/login');
     }
 });
 
-// ❗ KALO MAU NAMBAH PAGES, TAMBAHIN INI AJA ❗
 const pages = [
     '/',
     '/images',
