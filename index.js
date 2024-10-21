@@ -123,7 +123,7 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                     iconURL: 'https://velvedgarden.vercel.app/images/VGdiscord.png'
                 })
                 .addFields(
-                    { name: 'Rating', value: data?.rating?.replace('5', '⭐⭐⭐⭐⭐').replace('4', '⭐⭐⭐⭐').replace('3', '⭐⭐⭐').replace('2', '⭐⭐').replace('1', '⭐') || 'N/A' },
+                    { name: 'Rating', value: data?.rating?.replace('5', '(5)  ⭐⭐⭐⭐⭐').replace('4', '(4)  ⭐⭐⭐⭐').replace('3', '(3)  ⭐⭐⭐').replace('2', '(2)  ⭐⭐').replace('1', '(1)  ⭐') || 'N/A' },
                     { name: 'Reason', value: data?.reason || 'N/A' },
                     { name: 'Suggestion', value: data?.suggestion || 'N/A' }
                 )
@@ -135,7 +135,14 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
 
             const webhook = new WebhookClient({ url: process.env.WEBHOOK_FEEDBACK });
             await webhook.send({ embeds: [embed] });
-            await db.query('INSERT INTO `rating` (`server`, `5`, `4`, `3`, `2`, `1`) VALUES (?, 0, 0, 0, 0, 0) ON DUPLICATE KEY UPDATE `5` = 5 + CASE WHEN ? = 5 THEN 1 ELSE 0 END, `4` = 4 + CASE WHEN ? = 4 THEN 1 ELSE 0 END, `3` = 3 + CASE WHEN ? = 3 THEN 1 ELSE 0 END, `2` = 2 + CASE WHEN ? = 2 THEN 1 ELSE 0 END, `1` = 1 + CASE WHEN ? = 1 THEN 1 ELSE 0 END',
+            await db.query(`INSERT INTO \`rating\` (\`server\`, \`5\`, \`4\`, \`3\`, \`2\`, \`1\`) 
+            VALUES (?, 0, 0, 0, 0, 0) 
+            ON DUPLICATE KEY UPDATE 
+            \`5\` = \`5\` + CASE WHEN ? = 5 THEN 1 ELSE 0 END, 
+            \`4\` = \`4\` + CASE WHEN ? = 4 THEN 1 ELSE 0 END, 
+            \`3\` = \`3\` + CASE WHEN ? = 3 THEN 1 ELSE 0 END, 
+            \`2\` = \`2\` + CASE WHEN ? = 2 THEN 1 ELSE 0 END, 
+            \`1\` = \`1\` + CASE WHEN ? = 1 THEN 1 ELSE 0 END`, 
             [process.env.GUILD_ID, data?.rating, data?.rating, data?.rating, data?.rating, data?.rating]);
         }
         res.status(200).json({ message: 'OK', code: 200 });
