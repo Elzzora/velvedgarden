@@ -42,11 +42,13 @@ window.onclick = function(event) {
 async function getCount() {
     try {
       const res = await fetch('/api/guilds');
+      const rating = await fetch('/api/ratings');
+      const dataRate = await rating.json();
       const data = await res.json();
       document.getElementById('members-count').textContent = data?.members || 'fetch failed';
       document.getElementById('channels-count').textContent = data?.channels || 'fetch failed';
       document.getElementById('actives-count').textContent = data?.actives || 'fetch failed';
-      document.getElementById('events-count').textContent = '0';
+      document.getElementById('events-count').textContent = data?.averageRating || 'fetch failed';
     } catch (err) {
       document.getElementById('members-count').textContent = 'fetch failed';
       document.getElementById('channels-count').textContent = 'fetch failed';
