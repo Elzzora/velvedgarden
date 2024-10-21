@@ -80,11 +80,11 @@ app.get('/api/ratings', async (req, res) => {
             averageRating: totalUser > 0 ? (totalRating / totalUser).toFixed(2) : 0,
             totalUser: totalUser,
             ratings: {
-                5: rating[5] || 0,
-                4: rating[4] || 0,
-                3: rating[3] || 0,
-                2: rating[2] || 0,
-                1: rating[1] || 0
+                5: rating['5'] || 0,
+                4: rating['4'] || 0,
+                3: rating['3'] || 0,
+                2: rating['2'] || 0,
+                1: rating['1'] || 0
             }
         });
     } catch (err) {
