@@ -127,7 +127,13 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                     iconURL: 'https://velvedgarden.vercel.app/images/VGdiscord.png'
                 })
                 .addFields(
-                    { name: 'Rating', value: data?.rating || 'N/A' },
+                    { name: 'Rating', value: data?.rating?
+                        .replace('5', '(5)  ⭐⭐⭐⭐⭐')
+                        .replace('4', '(4)  ⭐⭐⭐⭐')
+                        .replace('3', '(3)  ⭐⭐⭐')
+                        .replace('2', '(2)  ⭐⭐')
+                        .replace('1', '(1)  ⭐') || 'N/A'
+                    },
                     { name: 'Reason', value: data?.reason || 'N/A' },
                     { name: 'Suggestion', value: data?.suggestion || 'N/A' }
                 )
