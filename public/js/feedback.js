@@ -1,6 +1,7 @@
 const form = document.getElementById('recruitment-form');
 const submitButton = form.querySelector('button');
 getProfile();
+window.onclick = closeAlert();
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
