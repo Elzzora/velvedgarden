@@ -35,6 +35,7 @@
         <section id="partners" class="partners-section">
             <h2>Our Partners</h2>
             <p>Here are the amazing servers and communities that we are proud to partner with.</p>
+            <input type="text" id="searchInput" placeholder="Search Partners..." oninput="filterPartners()">
             <div class="partners-list">
                 <div class="partner-card">
                     <img src="https://cdn.discordapp.com/icons/1266980286198054944/a_21d71f2958b8aae8fc2d5ed86e607983.gif?size=4096" alt="Seraphic Sactum">
@@ -155,6 +156,19 @@
                 img.src = `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 6)}.png`;
             }
         }
+    }
+
+    function filterPartners() {
+        const searchInput = document.getElementById('searchInput').value.toLowerCase();
+        const partnerCards = document.querySelectorAll('.partner-card');
+        partnerCards.forEach(card => {
+            const title = card.querySelector('h3').innerText.toLowerCase();
+            if (title.includes(searchInput)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
     }
 </script>
 </body>
