@@ -151,7 +151,7 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
     }
 });
 
-app.all('/recruitments', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'recruitments.html')));
+// app.all('/recruitments', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'recruitments.html')));
 app.all('/feedback', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'feedback.html')));
 app.all('/profile', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'profile.html')));
 
