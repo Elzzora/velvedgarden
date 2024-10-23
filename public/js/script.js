@@ -1,4 +1,5 @@
 getCount();
+getIcon();
 document.querySelectorAll('nav ul li a').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -54,5 +55,20 @@ async function getCount() {
       document.getElementById('channels-count').textContent = 'fetch failed';
       document.getElementById('actives-count').textContent = 'fetch failed';
       document.getElementById('events-count').textContent = 'fetch failed';
+    }
+}
+
+async function getIcon() {
+    const images = document.querySelectorAll('.staff-member img');
+    for (const img of images) {
+        const imageCheck = new Image();
+        imageCheck.src = img.src;
+        const checkImage = new Promise((resolve) => {
+            imageCheck.onload = () => resolve(true);
+            imageCheck.onerror = () => resolve(false);
+        });
+        if (!await checkImage) {
+            img.src = `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 6)}.png`;
+        }
     }
 }
