@@ -98,7 +98,7 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
     const user = req.user;
     try {
         if (type === 'recruitments') {
-            const embed = new EmbedBuilder()
+            /*const embed = new EmbedBuilder()
                 .setTitle('New Form Submission')
                 .addFields(
                     { name: 'Username', value: `[@${user.user_username || 'N/A'}](https://discord.com/users/${user.user_id})` },
@@ -114,7 +114,7 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                 .setColor('Green');
             
             const webhook = new WebhookClient({ url: process.env.WEBHOOK });
-            await webhook.send({ embeds: [embed] });
+            await webhook.send({ embeds: [embed] });*/
         } else if (type === 'feedback') {
             const embed = new EmbedBuilder()
                 .setTitle(`@${user.user_username}`)
