@@ -8,6 +8,14 @@ form.addEventListener('submit', async (event) => {
   submitButton.classList.add('loading');
   submitButton.disabled = true;
   const hcaptchaResponse = hcaptcha?.getResponse();
+  const formData = new FormData(form);
+  const data = {
+    rating: formData.get('rating'),
+    reason: formData.get('reason') || 'N/A',
+    suggestion: formData.get('suggestion') || 'N/A' 
+  };
+  
+  if (!data.rating) return showAlert('You must select rating you want to send!', 'error');
   if (!hcaptchaResponse || hcaptchaResponse?.length === 0) {
     return showAlert('Please complete the CAPTCHA!', 'error');
   }
@@ -25,15 +33,6 @@ form.addEventListener('submit', async (event) => {
   } catch (error) {
     return showAlert('An error occurred while verifying CAPTCHA: ' + error, 'error');
   }
-  
-  const formData = new FormData(form);
-  const data = {
-    rating: formData.get('rating'),
-    reason: formData.get('reason') || 'N/A',
-    suggestion: formData.get('suggestion') || 'N/A' 
-  };
-  
-  if (!data.rating) return showAlert('You must select rating you want to send!', 'error');
   
   try {
     const response = await fetch('/submit/feedback', {
