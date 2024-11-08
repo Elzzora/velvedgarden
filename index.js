@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const { WebhookClient, EmbedBuilder } = require('discord.js');
 const bodyParser = require('body-parser');
 const { createPool } = require('mysql2/promise');
+const { verify } = require('hcaptcha');
 require('dotenv').config();
 
 const app = express();
@@ -57,6 +58,17 @@ app.get('/api/guilds', async (_, res) => {
     } catch (err) {
         handleError(res, err);
     }
+});
+
+app.post('/api/captcha', (req, res) => {
+    verify(process.env.CAPTCHA_SECRET, req.body.token)
+    .then((data) => {
+        if (data.success === true) {
+            res.status(200).json({ message: 'HCaptcha Verified', code: 200 });
+        } else {
+            res.status(401).json({ message: 'HCaptcha Verification Failed', code: 401 });
+        }
+    })
 });
 
 app.get('/api/ratings', async (req, res) => {

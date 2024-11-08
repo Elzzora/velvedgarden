@@ -7,7 +7,25 @@ form.addEventListener('submit', async (event) => {
   event.preventDefault();
   submitButton.classList.add('loading');
   submitButton.disabled = true;
+  const hcaptchaResponse = hcaptcha?.getResponse();
+  if (!hcaptchaResponse || hcaptchaResponse?.length === 0) {
+    return showAlert('Please complete the CAPTCHA!', 'error');
+  }
+  
+  try {
+    const res = await fetch('/api/captcha', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: hcaptchaResponse
+      })
+    });
 
+    if (!res.ok) return showAlert('Error: Unable to verify CAPTCHA!', 'error');
+  } catch (error) {
+    return showAlert('An error occurred while verifying CAPTCHA: ' + error, 'error');
+  }
+  
   const formData = new FormData(form);
   const data = {
     rating: formData.get('rating'),

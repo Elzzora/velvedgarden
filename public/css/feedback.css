@@ -53,6 +53,7 @@ h1 {
 
 .form-group {
   margin-bottom: 20px;
+  align-items: center;
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInForm 0.5s forwards;
@@ -121,9 +122,10 @@ label {
 input, textarea {
   font-family: 'Poppins', sans-serif;
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
+  box-sizing: border-box;
   font-size: 16px;
   margin-top: 6px;
   transition: border-color 0.3s, box-shadow 0.3s;
@@ -145,6 +147,8 @@ input:focus, textarea:focus {
 }
 
 button {
+  display: block;
+  margin-top: 20px;
   background-color: #007bff;
   color: white;
   border: none;
@@ -190,7 +194,8 @@ button.loading::after {
 }
 
 #homes {
-  display: inline-block;
+  display: block;
+  text-align: center;
   padding: 12px 25px;
   margin-top: 20px;
   font-size: 15px;
