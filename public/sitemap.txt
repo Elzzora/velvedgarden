@@ -29,7 +29,9 @@ https://velvedgarden.my.id/js/feedback.js
 https://velvedgarden.my.id/js/recruitments.js
 
 https://velvedgarden.my.id/css/images.css
-https://velvedgarden.my.id/css/style.css
+https://velvedgarden.my.id/css/styles.css
 https://velvedgarden.my.id/css/partners.css
 https://velvedgarden.my.id/css/recruitments.css
-https://velvedgarden.my.id/css/
+https://velvedgarden.my.id/css/404.css
+https://velvedgarden.my.id/css/feedback.css
+https://velvedgarden.my.id/css/login.css
