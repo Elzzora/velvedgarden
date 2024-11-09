@@ -1,2 +1,4 @@
 User-Agent: nsa
 Disallow: /
+
+Sitemap: https://velvedgarden.my.id/sitemap.txt
