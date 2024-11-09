@@ -1,0 +1,16 @@
+https://velvedgarden.my.id
+https://velvedgarden.my.id/images
+https://velvedgarden.my.id/partners
+https://velvedgarden.my.id/feedback
+https://velvedgarden.my.id/login
+https://velvedgarden.my.id/logout
+https://velvedgarden.my.id/instagram
+https://velvedgarden.my.id/facebook
+https://velvedgarden.my.id/twitter
+https://velvedgarden.my.id/recruitments
+https://velvedgarden.my.id/api/guilds
+https://velvedgarden.my.id/api/ratings
+https://velvedgarden.my.id/api/profile
+https://velvedgarden.my.id/api/submit/feedback
+https://velvedgarden.my.id/api/submit/recruitments
+https://velvedgarden.my.id/api/auth/discord
