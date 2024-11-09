@@ -167,6 +167,12 @@ app.all('/recruitments', fetchUserData, isAuthenticated, (_, res) => res.sendFil
 app.all('/feedback', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'feedback.html')));
 app.all('/profile', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'profile.html')));
 
+app.all('/redirect', (req, res) => {
+    if (req.query?.url) return res.redirect(req.query?.url);
+    if (req.query?.uri) return res.redirect(req.query?.uri);
+    return res.redirect('/');
+});
+
 app.all('/auth/discord', (_, res) => {
     res.clearCookie('user_id');
     res.redirect(process.env.AUTH_URL);
