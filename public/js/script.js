@@ -49,7 +49,7 @@ async function getData() {
       document.getElementById('channels-count').textContent = data?.channels || 'unknown';
       document.getElementById('actives-count').textContent = data?.actives || 'unknown';
       document.getElementById('events-count').textContent = dataRate?.averageRating || 'unknown';
-    } catch () {
+    } catch (err) {
       document.getElementById('members-count').textContent = 'fetch failed';
       document.getElementById('channels-count').textContent = 'fetch failed';
       document.getElementById('actives-count').textContent = 'fetch failed';
