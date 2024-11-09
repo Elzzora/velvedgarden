@@ -229,7 +229,8 @@ const pages = [
     '/logout',
     '/login',
     '/instagram',
-    '/twitter'
+    '/twitter',
+    '/privacy'
 ];
 
 pages.forEach(page => {
