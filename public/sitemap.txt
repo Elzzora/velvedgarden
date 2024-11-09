@@ -21,6 +21,7 @@ https://velvedgarden.my.id/instagram
 https://velvedgarden.my.id/sitemap.txt
 https://velvedgarden.my.id/robots.txt
 https://velvedgarden.my.id/favicon.ico
+https://velvedgarden.my.id/license.txt
 https://velvedgarden.my.id/js/partners.js
 https://velvedgarden.my.id/js/script.js
 https://velvedgarden.my.id/js/feedback.js
