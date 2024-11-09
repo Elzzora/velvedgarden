@@ -18,3 +18,11 @@ https://velvedgarden.my.id/submit/feedback
 https://velvedgarden.my.id/submit/recruitments
 https://velvedgarden.my.id/twitter
 https://velvedgarden.my.id/instagram
+
+
+https://velvedgarden.my.id/sitemap.txt
+https://velvedgarden.my.id/robots.txt
+https://velvedgarden.my.id/favicon.ico
+https://velvedgarden.my.id/js/partners.js
+https://velvedgarden.my.id/js/scripts.js
+https://velvedgarden.my.id/js/feedback.js
