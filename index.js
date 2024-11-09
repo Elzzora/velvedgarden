@@ -167,6 +167,12 @@ app.all('/recruitments', fetchUserData, isAuthenticated, (_, res) => res.sendFil
 app.all('/feedback', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'feedback.html')));
 app.all('/profile', fetchUserData, isAuthenticated, (_, res) => res.sendFile(path.join(__dirname, 'pages', 'profile.html')));
 
+app.all('/redirect', (req, res) => {
+    if (req.query?.url) return res.redirect(req.query?.url);
+    if (req.query?.uri) return res.redirect(req.query?.uri);
+    return res.redirect('/');
+});
+
 app.all('/auth/discord', (_, res) => {
     res.clearCookie('user_id');
     res.redirect(process.env.AUTH_URL);
@@ -221,22 +227,30 @@ const pages = [
     '/images',
     '/partners',
     '/logout',
-    '/login'
+    '/login',
+    '/instagram',
+    '/twitter'
 ];
 
 pages.forEach(page => {
     app.all(page, async (req, res) => {
-        if (page === '/logout') {
+        if (page === '/instagram') {
+            res.redirect('https://instagram.com/velvedgarden');
+            return;
+        } else if (page === '/twitter') {
+            res.redirect('https://x.com/velvedgarden');
+            return;
+        } else if (page === '/logout') {
             res.clearCookie('user_id');
             res.redirect('/login');
             return;
-        }
-        if (page === '/login') {
+        } else if (page === '/login') {
             if (req.cookies?.user_id) return res.redirect('/profile');
             res.sendFile(path.join(__dirname, 'pages', 'login.html'));
             return;
+        } else {
+            res.sendFile(path.join(__dirname, 'pages', page === '/' ? 'index.html' : `${page.substring(1)}.html`));
         }
-        res.sendFile(path.join(__dirname, 'pages', page === '/' ? 'index.html' : `${page.substring(1)}.html`));
     });
 });
 
