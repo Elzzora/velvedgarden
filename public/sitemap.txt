@@ -1,4 +1,4 @@
-https://velvedgarden.my.id
+https://velvedgarden.my.id/
 https://velvedgarden.my.id/api/guilds
 https://velvedgarden.my.id/api/ratings
 https://velvedgarden.my.id/api/profile
@@ -19,10 +19,17 @@ https://velvedgarden.my.id/submit/recruitments
 https://velvedgarden.my.id/twitter
 https://velvedgarden.my.id/instagram
 
-
 https://velvedgarden.my.id/sitemap.txt
 https://velvedgarden.my.id/robots.txt
 https://velvedgarden.my.id/favicon.ico
+
 https://velvedgarden.my.id/js/partners.js
-https://velvedgarden.my.id/js/scripts.js
+https://velvedgarden.my.id/js/script.js
 https://velvedgarden.my.id/js/feedback.js
+https://velvedgarden.my.id/js/recruitments.js
+
+https://velvedgarden.my.id/css/images.css
+https://velvedgarden.my.id/css/style.css
+https://velvedgarden.my.id/css/partners.css
+https://velvedgarden.my.id/css/recruitments.css
+https://velvedgarden.my.id/css/
