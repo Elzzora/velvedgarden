@@ -1,4 +1,5 @@
-/* Global Styling */
+/* GLOBAL STYLING */
+
 * {
     margin: 0;
     padding: 0;
@@ -14,7 +15,7 @@ body {
     background-color: #f1f5f9;
     color: #333;
     scroll-behavior: smooth;
-   -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: transparent;
     outline: none !important;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -68,6 +69,7 @@ nav ul li a {
     transition: color 0.3s;
 }
 
+
 nav ul li a:hover {
     color: #007bff;
 }
@@ -105,7 +107,7 @@ nav ul li a:hover {
 }
 
 #home h1 span {
-    color: #00d4ff;
+    color: #00d4ff
 }
 
 #home p {
@@ -159,6 +161,7 @@ nav ul li a:hover {
     flex-direction: column;
     gap: 10px;
     max-height: 500px;
+    border-radius: 20px;
     overflow-y: auto;
 }
 
@@ -191,7 +194,6 @@ nav ul li a:hover {
     color: #666;
 }
 
-/* Keyframes for modal animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -214,7 +216,6 @@ nav ul li a:hover {
     }
 }
 
-/* Modal Styling */
 .modal {
     display: none;
     position: fixed;
@@ -233,7 +234,6 @@ nav ul li a:hover {
     opacity: 1;
 }
 
-/* Modal content animation */
 .modal-content {
     background-color: white;
     margin: 15% auto;
@@ -271,7 +271,6 @@ nav ul li a:hover {
     cursor: pointer;
 }
 
-/* Statistik Section Styling */
 #statistics {
     background-color: #f1f5f9;
     padding: 100px 20px;
@@ -316,7 +315,6 @@ nav ul li a:hover {
     color: #007bff;
 }
 
-/* Modern Footer Styling */
 footer {
     background-color: #1f2937;
     color: white;
@@ -350,7 +348,7 @@ footer {
 .footer-col p {
     font-size: 16px;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .footer-col ul {
@@ -363,7 +361,7 @@ footer {
 }
 
 .footer-col ul li a {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.8);
     font-size: 16px;
     transition: color 0.3s;
 }
@@ -395,3 +393,140 @@ footer {
     font-size: 14px;
     color: rgba(255, 255, 255, 0.5);
   }
+
+.checkbox {
+    opacity: 0;
+    position: absolute;
+}
+
+.checkbox-label {
+    background-color: #111;
+    width: 50px;
+    height: 26px;
+    border-radius: 50px;
+    position: relative;
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.checkbox-label .ball {
+    background-color: #fff;
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.checkbox:checked + .checkbox-label .ball {
+    transform: translateX(24px);
+}
+
+
+
+
+/* DARK MODE */
+
+body.dark-mode {
+    background-color: black;
+    color: white;
+}
+
+header.dark-mode {
+    background: rgba(22, 28, 38, 0.9);
+    color: white;
+}
+
+header.dark-mode .logo {
+    color: #00d4ff;
+}
+
+.dark-mode ul.dark-mode li a {
+    color: white;
+}
+
+#home.dark-mode {
+   background: linear-gradient(135deg, #007bff, black);
+   color: white;
+}
+
+
+#about.dark-mode {
+    background-color: #161717;
+}
+
+#about.dark-mode h2 {
+    font-size: 36px;
+    color: #00d4ff;
+    margin-botton: 20px;
+}
+
+#about.dark-mode p {
+    font-size: 18px;
+    color: white;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#staff.dark-mode {
+    background-color: #07407d;
+}
+
+#staff.dark-mode h2 {
+    color: white;
+}
+
+.staff-member.dark-mode {
+    background-color: #161c26;
+    color: white;
+}
+
+.staff-member.dark-mode h3 {
+    color: white;
+}
+
+.staff-member.dark-mode p {
+    color: white;
+}
+
+.modal.dark-mode {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content.dark-mode {
+    background-color: #161717;
+    color: white;
+}
+
+#statistics.dark-mode {
+    background-color: #161717;
+}
+
+#statistics.dark-mode h2 {
+    color: #00d4ff;
+}
+
+.stat-item.dark-mode {
+    background-color: #161c26;
+}
+
+.stat-item.dark-mode h3 {
+    color: white;
+}
+
+.stat-item.dark-mode p {
+    color: #00d4ff;
+}
+
+footer.dark-mode {
+    background-color: #07407d;
+}
+
+.footer-col.dark-mode h3 {
+   color: white;
+}
