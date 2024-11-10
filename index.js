@@ -9,7 +9,7 @@ const { verify } = require('hcaptcha');
 require('dotenv').config();
 
 const app = express();
-const db = createPool(process.env.DATABASE);
+const db = process.env.DATABADE ? createPool(process.env.DATABASE) : {};
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
