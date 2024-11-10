@@ -56,7 +56,6 @@ header .logo .logo-img {
     transform: translateY(12px);
 }
 
-
 nav ul {
     list-style: none;
     display: flex;
@@ -68,7 +67,6 @@ nav ul li a {
     color: #333;
     transition: color 0.3s;
 }
-
 
 nav ul li a:hover {
     color: #007bff;
@@ -107,7 +105,7 @@ nav ul li a:hover {
 }
 
 #home h1 span {
-    color: #00d4ff
+    color: #00d4ff;
 }
 
 #home p {
@@ -246,7 +244,6 @@ nav ul li a:hover {
     animation: fadeIn 0.3s ease;
 }
 
-/* Responsive design for smaller screens */
 @media (max-width: 768px) {
     .modal-content {
         width: 80%;
