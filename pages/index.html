@@ -23,8 +23,8 @@
     <header>
         <nav>
             <div class="logo">
-                <img src="/images/VGblank.png" alt="Logo" class="logo-img"> 
-              <span>Evelved Garden</span>
+                <img src="/images/VGblank.png" alt="Logo" class="logo-img">
+                <span>Velved Garden</span>
             </div>
             <ul>
                 <li><a href="/">Home</a></li>
@@ -34,6 +34,7 @@
             </ul>
         </nav>
     </header>
+
     <section id="home" class="section">
         <div class="home-content">
             <h1>Welcome to Our <span>Discord</span> Server</h1>
@@ -41,137 +42,142 @@
             <a href="https://discord.gg/GkpeB2RFr3" class="join-btn">Join Us Now</a>
         </div>
     </section>
+
     <section id="about" class="section">
         <div class="about-content">
             <h2>About Our Server</h2>
             <p>We are an active community where you can find fun, learning, and a great time. From gaming to tech discussions, we offer a diverse range of channels that cater to all interests.</p>
         </div>
     </section>
+
     <section id="staff" class="section">
         <div class="staff-content">
             <h2>Meet Our Staff</h2>
             <div class="staff-grid">
-                
                 <div class="staff-member" onclick="openModal('staff1')">
                     <img src="https://images-ext-1.discordapp.net/external/CXogjX3XSjiWFaR69riQAFcesrxtRSEodbJT3221-Vk/%3Fsize%3D4096/https/cdn.discordapp.com/avatars/1251874060711759984/4c187b0867d121f4e8667f6762ce059d.webp" alt="Nerith">
                     <h3>Nerith Faelwyn</h3>
                     <p>Owner</p>
                 </div>
-                
                 <div class="staff-member" onclick="openModal('staff2')">
                     <img src="https://images-ext-1.discordapp.net/external/P6HP7q096t47RC_2-of8MwvK44Q5AkLkgUvrPnW9bsI/%3Fsize%3D4096/https/cdn.discordapp.com/avatars/1058131180593102939/d339f78934b3c47f969e7841388e451e.webp" alt="Vezx">
                     <h3>Vezx</h3>
                     <p>Co Owner</p>
                 </div>
-
                 <div class="staff-member" onclick="openModal('staff3')">
                     <img src="https://cdn.discordapp.com/avatars/1241225524949553223/2de5861d1879f8f30c28fd98064d1059.png?size=4096" alt="AstroHunt">
                     <h3>Astrohunt</h3>
                     <p>Admin</p>
                 </div>
-
                 <div class="staff-member" onclick="openModal('staff4')">
                     <img src="https://cdn.discordapp.com/avatars/1009314804525178920/34e81620d30df3171449aecee27232c1.png?size=4096" alt="Tyowk">
                     <h3>Tyowk</h3>
                     <p>Developer</p>
                 </div>
-                
-                <!-- Add more biar ga lupa -->
-                
             </div>
         </div>
     </section>
 
-<div id="staff1-modal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('staff1')">&times;</span>
-        <h2>Nerith Faelwyn</h2>
-        <p><strong>Role:</strong> Owner</p>
-        <p><strong>Rating:</strong> 4.9/5</p>
-    </div>
-</div>
-<div id="staff2-modal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('staff2')">&times;</span>
-        <h2>Vezx</h2>
-        <p><strong>Role:</strong> Admin</p>
-        <p><strong>Joined:</strong> 17 June 2024</p>
-        <p><strong>Rating:</strong> 4.7/5</p>
-    </div>
-</div>
-<div id="staff3-modal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('staff3')">&times;</span>
-        <h2>Astrohunt</h2>
-        <p><strong>Role:</strong> Admin</p>
-        <p><strong>Joined:</strong> 9 June 2024</p>
-        <p><strong>Rating:</strong> 4.5/5</p>
-    </div>
-</div>
-<div id="staff4-modal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('staff4')">&times;</span>
-        <h2>Tyowk</h2>
-        <p><strong>Role:</strong> Developer</p>
-        <p><strong>Joined:</strong> 16 October 2024</p>
-        <p><strong>Rating:</strong> 4.1/5</p>
-    </div>
-</div>
-<section id="statistics" class="section">
-    <div class="statistics-content">
-        <h2>Server Statistics</h2>
-        <div class="stats-grid">
-            <div class="stat-item">
-                <h3>Members</h3>
-                <p id="members-count">loading...</p> 
-            </div>
-            <div class="stat-item">
-                <h3>Channels</h3>
-                <p id="channels-count">loading...</p>
-            </div>
-            <div class="stat-item">
-                <h3>Online</h3>
-                <p id="actives-count">loading...</p>
-            </div>
-            <div class="stat-item">
-                <h3>Ratings</h3>
-                <p id="events-count">loading...</p> 
-            </div>
+    <div id="staff1-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('staff1')">&times;</span>
+            <h2>Nerith Faelwyn</h2>
+            <p><strong>Role:</strong> Owner</p>
+            <p><strong>Rating:</strong> 4.9/5</p>
         </div>
     </div>
-</section>
-<footer>
-    <div class="footer-container">
-        <div class="footer-row">
-            <div class="footer-col">
-                <h3>Velved Garden</h3>
-                <p>Join our Discord for a vibrant community experience and stay connected!</p> 
-            </div>
 
-            <div class="footer-col">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/images">Images</a></li>
-                    <li><a href="/partners">Partners</a></li>
-                    <li><a href="/feedback">Feedback</a></li>
-                    <li><a href="/privacy">Privacy</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>Follow Us</h3>
-                <div class="social-icons">
-                    <a href="/twitter" target="_blank"><img src="/images/x.png" alt="Twitter"></a>
-                    <a href="/facebook" target="_blank"><img src="/images/fb.png" alt="Facebook"></a>
-                    <a href="/instagram" target="_blank"><img src="/images/ig.png" alt="Instagram"></a>
+    <div id="staff2-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('staff2')">&times;</span>
+            <h2>Vezx</h2>
+            <p><strong>Role:</strong> Admin</p>
+            <p><strong>Joined:</strong> 17 June 2024</p>
+            <p><strong>Rating:</strong> 4.7/5</p>
+        </div>
+    </div>
+
+    <div id="staff3-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('staff3')">&times;</span>
+            <h2>Astrohunt</h2>
+            <p><strong>Role:</strong> Admin</p>
+            <p><strong>Joined:</strong> 9 June 2024</p>
+            <p><strong>Rating:</strong> 4.5/5</p>
+        </div>
+    </div>
+
+    <div id="staff4-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('staff4')">&times;</span>
+            <h2>Tyowk</h2>
+            <p><strong>Role:</strong> Developer</p>
+            <p><strong>Joined:</strong> 16 October 2024</p>
+            <p><strong>Rating:</strong> 4.1/5</p>
+        </div>
+    </div>
+
+    <section id="statistics" class="section">
+        <div class="statistics-content">
+            <h2>Server Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>Members</h3>
+                    <p id="members-count">loading...</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Channels</h3>
+                    <p id="channels-count">loading...</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Online</h3>
+                    <p id="actives-count">loading...</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Ratings</h3>
+                    <p id="events-count">loading...</p>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 TheVelvedGarden. All Rights Reserved.</p>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-row">
+                <div class="footer-col">
+                    <input type="checkbox" class="checkbox" id="checkbox">
+                    <label for="checkbox" class="checkbox-label">
+                    <span class="ball"></span>
+                     </label>
+                </div>
+                <div class="footer-col">
+                    <h3>Velved Garden</h3>
+                    <p>Join our Discord for a vibrant community experience and stay connected!</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/images">Images</a></li>
+                        <li><a href="/partners">Partners</a></li>
+                        <li><a href="/feedback">Feedback</a></li>
+                        <li><a href="/privacy">Privacy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="/twitter" target="_blank"><img src="/images/x.png" alt="Twitter"></a>
+                        <a href="/facebook" target="_blank"><img src="/images/fb.png" alt="Facebook"></a>
+                        <a href="/instagram" target="_blank"><img src="/images/ig.png" alt="Instagram"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TheVelvedGarden. All Rights Reserved.</p>
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
 <script src="/js/script.js"></script>
 </body>
 </html>
