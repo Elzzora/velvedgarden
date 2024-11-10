@@ -71,3 +71,35 @@ async function getIcon() {
         }
     }
 }
+
+const themes = localStorage.getItem('themes');
+if (themes === 'dark') {
+    darkModeChange();
+    document.getElementById('checkbox').checked = true;
+}
+
+const checkbox = document.getElementById("checkbox")
+checkbox.addEventListener("change", () => {
+    darkModeChange()
+    if (themes === 'dark') {
+        localStorage.setItem('themes', 'light');
+    } else {
+        localStorage.setItem('themes', 'dark');
+    }
+});
+
+function darkModeChange() {
+    document.body.classList.toggle('dark-mode');
+    document.querySelector('header').classList.toggle('dark-mode');
+    document.querySelector('#home').classList.toggle('dark-mode');
+    document.querySelector('#about').classList.toggle('dark-mode');
+    document.querySelector('#staff').classList.toggle('dark-mode');
+    document.querySelectorAll('.staff-member').forEach(member => member.classList.toggle('dark-mode'));
+    document.querySelectorAll('.modal').forEach(modal => modal.classList.toggle('dark-mode'));
+    document.querySelectorAll('.modal-content').forEach(modal => modal.classList.toggle('dark-mode'));
+    document.querySelector('#statistics').classList.toggle('dark-mode');
+    document.querySelectorAll('.stat-item').forEach(stat => stat.classList.toggle('dark-mode'));
+    document.querySelector('ul').classList.toggle('dark-mode');
+    document.querySelector('footer').classList.toggle('dark-mode');
+    document.querySelectorAll('.footer-col').forEach(footer => footer.classList.toggle('dark-mode'));
+}
