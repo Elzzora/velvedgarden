@@ -27,7 +27,6 @@ const fetchUserData = async (req, res, next) => {
     if (!userId) return next();
     try {
         const [userData] = await db.query('SELECT * FROM `discord` WHERE `user_id` = ?', [userId]);
-        db?.getConnection()?.release();
         req.user = userData.length > 0 ? userData[0] : null;
     } catch (err) {
         return next(err);
@@ -75,7 +74,6 @@ app.post('/api/captcha', (req, res) => {
 app.get('/api/ratings', async (req, res) => {
     try {
         const [ratingData] = await db.query('SELECT * FROM `rating` WHERE `server` = ?', [process.env.GUILD_ID]);
-        db?.getConnection()?.release();
         const rating = ratingData.length > 0 ? ratingData[0] : null;
         if (!rating) return res.status(404).json({ message: 'Not Found', code: 404 });
         
@@ -215,7 +213,6 @@ app.get('/auth/discord/callback', async (req, res) => {
 
         await db.query('INSERT INTO `discord` (`user_id`, `user_avatar`, `user_email`, `user_username`) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `user_avatar` = ?, `user_email` = ?, `user_username` = ?', 
         [id, avatar, email, username, avatar, email, username]);
-        db?.getConnection()?.release();
         
         res.cookie('user_id', id, { maxAge: 3600000, httpOnly: true, secure: true });
         return res.redirect('/profile');
