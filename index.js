@@ -213,7 +213,7 @@ app.get('/auth/discord/callback', async (req, res) => {
 
         await db.query('INSERT INTO `discord` (`user_id`, `user_avatar`, `user_email`, `user_username`) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `user_avatar` = ?, `user_email` = ?, `user_username` = ?', 
         [id, avatar, email, username, avatar, email, username]);
-        
+
         res.cookie('user_id', id, { maxAge: 3600000, httpOnly: true, secure: true });
         return res.redirect('/profile');
     } catch (err) {
