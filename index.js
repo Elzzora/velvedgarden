@@ -127,7 +127,10 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
             
             await fetch('https://discord.com/api/v10/channels/1296771685810442290/messages', {
                 method: 'POST',
-                headers: { Authorization: `Bot ${process.env.TOKEN}` },
+                headers: {
+                    'Authorization': `Bot ${process.env.TOKEN}`,
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
                     embeds: [embed]
                 })
@@ -161,7 +164,10 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
             
             await fetch('https://discord.com/api/v10/channels/1249499788433690736/messages', {
                 method: 'POST',
-                headers: { Authorization: `Bot ${process.env.TOKEN}` },
+                headers: {
+                    'Authorization': `Bot ${process.env.TOKEN}`,
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
                     embeds: [embed],
                     components: [row]
