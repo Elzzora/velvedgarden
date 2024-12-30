@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const axios = require('axios');
 const cookieParser = require('cookie-parser');
-const { WebhookClient, EmbedBuilder } = require('discord.js');
+const { WebhookClient, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const bodyParser = require('body-parser');
 const { createPool } = require('mysql2/promise');
 const { verify } = require('hcaptcha');
@@ -146,7 +146,16 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                 .setColor('Yellow');
 
             const webhook = new WebhookClient({ url: process.env.WEBHOOK_FEEDBACK });
-            await webhook.send({ embeds: [embed] });
+            await webhook.send({ embeds: [embed], components: [
+                new ActionRowBuilder().addComponents(
+                    new ButtonBuilder()
+                    .setStyle(ButtonStyle.Link)
+                    .setURL('https://velvedgarden.vercel.app/feedback')
+                    .setEmoji('📩')
+                    .setLabel('Submit New Feedback')
+                )
+            ]});
+            
             await db.query(`INSERT INTO \`rating\` (\`server\`, \`5\`, \`4\`, \`3\`, \`2\`, \`1\`) 
             VALUES (?, 0, 0, 0, 0, 0) 
             ON DUPLICATE KEY UPDATE 
