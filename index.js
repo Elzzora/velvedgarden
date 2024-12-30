@@ -144,7 +144,17 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                     : `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 6)}.png`)
                 .setTimestamp()
                 .setColor('Yellow');
-
+            
+            await fetch('https://discord.com/api/v10/channels/1249499788433690736/messages', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bot ${process.env.TOKEN}`
+                },
+                body: JSON.stringify({
+                    embeds: [embed.data]
+                })
+            });
+            
             const webhook = new WebhookClient({ url: process.env.WEBHOOK_FEEDBACK });
             await webhook.send({ embeds: [embed], components: [
                 new ActionRowBuilder().addComponents(
