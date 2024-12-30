@@ -125,8 +125,14 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                 .setTimestamp()
                 .setColor('Green');
             
-            const webhook = new WebhookClient({ url: process.env.WEBHOOK });
-            await webhook.send({ embeds: [embed] });
+            await fetch('https://discord.com/api/v10/channels/1296771685810442290/messages', {
+                method: 'POST',
+                headers: { Authorization: `Bot ${process.env.TOKEN}` },
+                body: JSON.stringify({
+                    embeds: [embed]
+                })
+            });
+            
         } else if (type === 'feedback') {
             const embed = new EmbedBuilder()
                 .setTitle(`@${user.user_username}`)
@@ -144,27 +150,23 @@ app.post('/submit/:type', fetchUserData, isAuthenticatedJson, async (req, res) =
                     : `https://cdn.discordapp.com/embed/avatars/${Math.floor(Math.random() * 6)}.png`)
                 .setTimestamp()
                 .setColor('Yellow');
+
+            const row = new ActionRowBuilder().addComponents(
+                new ButtonBuilder()
+                .setStyle(ButtonStyle.Link)
+                .setURL('https://velvedgarden.vercel.app/feedback')
+                .setEmoji('📩')
+                .setLabel('Submit New Feedback')
+            );
             
             await fetch('https://discord.com/api/v10/channels/1249499788433690736/messages', {
                 method: 'POST',
-                headers: {
-                    Authorization: `Bot ${process.env.TOKEN}`
-                },
+                headers: { Authorization: `Bot ${process.env.TOKEN}` },
                 body: JSON.stringify({
-                    embeds: [embed.data]
+                    embeds: [embed],
+                    components: [row]
                 })
             });
-            
-            const webhook = new WebhookClient({ url: process.env.WEBHOOK_FEEDBACK });
-            await webhook.send({ embeds: [embed], components: [
-                new ActionRowBuilder().addComponents(
-                    new ButtonBuilder()
-                    .setStyle(ButtonStyle.Link)
-                    .setURL('https://velvedgarden.vercel.app/feedback')
-                    .setEmoji('📩')
-                    .setLabel('Submit New Feedback')
-                )
-            ]});
             
             await db.query(`INSERT INTO \`rating\` (\`server\`, \`5\`, \`4\`, \`3\`, \`2\`, \`1\`) 
             VALUES (?, 0, 0, 0, 0, 0) 
